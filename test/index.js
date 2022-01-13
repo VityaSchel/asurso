@@ -12,4 +12,6 @@ const api = new ASURSO({
   password: process.env.PASSWORD
 })
 
-console.log(await api.login())
+const existingSession = { atKey: process.env.AT, sessionToken: process.env.SESSION_TOKEN }
+
+await api.login(existingSession)
