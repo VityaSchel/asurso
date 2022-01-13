@@ -16,6 +16,7 @@ npm i asurso
 import ASURSO from 'asurso'
 
 const api = new ASURSO({
+  countryID: 2,
   regionID: 1,
   regionAreaID: -1,
   cityID: 2,

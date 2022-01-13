@@ -1,9 +1,12 @@
 {
   "name": "asurso",
-  "version": "0.0.4",
+  "version": "0.1.0",
+  "type": "module",
   "description": "asurso.ru API wrapper [beta]",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "test": "node test/index.js",
+    "prepublish": "babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/VityaSchel/asurso/issues"
   },
-  "homepage": "https://github.com/VityaSchel/asurso#readme"
+  "homepage": "https://github.com/VityaSchel/asurso#readme",
+  "devDependencies": {
+    "dotenv": "^11.0.0"
+  },
+  "dependencies": {
+    "cookie": "^0.4.1",
+    "md5": "^2.3.0",
+    "node-fetch": "^3.1.0",
+    "yup": "^0.32.11"
+  }
 }
