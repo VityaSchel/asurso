@@ -10,6 +10,8 @@ npm i asurso
 
 ## Использование
 
+Все ID вы можете найти в файле [LOGINIDS.md](LOGINIDS.md), а мои заметки о том, как я реверс-инженерил апи в [HOWITWORKS.md](HOWITWORKS.md)
+
 ```javascript
 import ASURSO from 'asurso'
 
