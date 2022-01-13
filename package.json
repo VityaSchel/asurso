@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "asurso.ru API wrapper [beta]",
   "main": "index.js",
   "scripts": {
