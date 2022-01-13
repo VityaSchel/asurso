@@ -1,0 +1,23 @@
+{
+  "name": "asurso",
+  "version": "0.0.1",
+  "description": "asurso.ru API wrapper [beta]",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VityaSchel/asurso.git"
+  },
+  "keywords": [
+    "api",
+    "wrapper",
+    "student"
+  ],
+  "author": "vityaschel <hi@hloth.dev> (https://hloth.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VityaSchel/asurso/issues"
+  },
+  "homepage": "https://github.com/VityaSchel/asurso#readme"
+}
