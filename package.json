@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "test": "node test/index.js",
-    "a": "find *.md -exec gen-toc --write {} \\;",
-    "prepublish": "babel src --out-dir lib"
+    "prepare": "babel src --out-dir lib && find *.md -exec gen-toc --write {} \\;"
   },
   "repository": {
     "type": "git",

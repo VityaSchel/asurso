@@ -19,7 +19,12 @@
   - [getStudentId(): Promise](<#getStudentId(): Promise>)
   - [getAssignmentDetails(assignmentID): Promise](<#getAssignmentDetails(assignmentID): Promise>)
   - [Interface AssignmentDetails](<#Interface AssignmentDetails>)
+  - [getUserProfile(studentID: number): Promise](<#getUserProfile(studentID: number): Promise>)
+  - [Interface Profile](<#Interface Profile>)
+  - [getUsersOnline(): Promise&lt;Array](<#getUsersOnline(): Promise<Array>)
+  - [Interface OnlineUser](<#Interface OnlineUser>)
 
+- [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](<#getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise>)
 - [Примеры](#Примеры)
 
 ## Установка 
@@ -260,57 +265,55 @@ await api.login();
 
 позжеее
 
-### getUsersOnline(): Promise<Array<OnlineUser>>
+### getUsersOnline(): Promise&lt;Array<OnlineUser>>
 
-https://asurso.ru/webapi/context/activeSessions завтра все распишу если не надоест
+<https://asurso.ru/webapi/context/activeSessions> завтра все распишу если не надоест
 
 ### Interface OnlineUser
 
-```
-{
-    "schoolId": 257,
-    "eoName": null,
-    "at": null,
-    "userId": 123456,
-    "loginName": null,
-    "nickName": "Щелочков Виктор",
-    "loginTime": null,
-    "lastAccessTime": "0001-01-01T00:00:00",
-    "ip": null,
-    "roles": "Ученик",
-    "eMs": "Самарское управление МОиН СО",
-    "timeOut": 3600
-}
-```
+    {
+        "schoolId": 257,
+        "eoName": null,
+        "at": null,
+        "userId": 123456,
+        "loginName": null,
+        "nickName": "Щелочков Виктор",
+        "loginTime": null,
+        "lastAccessTime": "0001-01-01T00:00:00",
+        "ip": null,
+        "roles": "Ученик",
+        "eMs": "Самарское управление МОиН СО",
+        "timeOut": 3600
+    }
 
 ## getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
 
-https://asurso.ru/asp/ajax/GetMessagesAjax.asp?AT=-------&nBoxID=1&jtStartIndex=0&jtPageSize=100&jtSorting=Sent%20DESC
+<https://asurso.ru/asp/ajax/GetMessagesAjax.asp?AT=-------&nBoxID=1&jtStartIndex=0&jtPageSize=100&jtSorting=Sent%20DESC>
 
 {
-    "Records": [
-        {
-            "MessageId": 20606329,
-            "FromName": "кто (школа)",
-            "FromEOName": "",
-            "Subj": "Re:",
-            "Sent": "27.12.2021 9:05",
-            "Read": "Y",
-            "SentTo": "кому (класс, школа)"
-        },
-        {
-            "MessageId": 14476819,
-            "FromName": "Администратор системы",
-            "FromEOName": "",
-            "Subj": "Отчет об успеваемости и посещаемости ученика",
-            "Sent": "23.10.2020 21:07",
-            "Read": "Y",
-            "SentTo": "Щелочков Виктор"
-        }
-    ],
-    "TotalRecordCount": 2,
-    "ResultStatus": 0,
-    "Result": "OK"
+"Records": [
+{
+"MessageId": 20606329,
+"FromName": "кто (школа)",
+"FromEOName": "",
+"Subj": "Re:",
+"Sent": "27.12.2021 9:05",
+"Read": "Y",
+"SentTo": "кому (класс, школа)"
+},
+{
+"MessageId": 14476819,
+"FromName": "Администратор системы",
+"FromEOName": "",
+"Subj": "Отчет об успеваемости и посещаемости ученика",
+"Sent": "23.10.2020 21:07",
+"Read": "Y",
+"SentTo": "Щелочков Виктор"
+}
+],
+"TotalRecordCount": 2,
+"ResultStatus": 0,
+"Result": "OK"
 }
 
 AT: ----
