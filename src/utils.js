@@ -21,3 +21,11 @@ export const aggregation = (baseClass, ...mixins) => {
   })
   return base
 }
+
+export const validateSchema = async (schema, values, order) => {
+  for (property of order) {
+    try { await schema[property].validate(values[property]) } catch(e) { e.path = property; throw e }
+  }
+}
+
+export const dateValidator = yup.date().test('is Date', 'StartDate is not date', d => d instanceof Date).required()

@@ -1,0 +1,81 @@
+diff --git a/node_modules/gen-toc/.DS_Store b/node_modules/gen-toc/.DS_Store
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/gen-toc/build/.DS_Store b/node_modules/gen-toc/build/.DS_Store
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/gen-toc/build/src/.DS_Store b/node_modules/gen-toc/build/src/.DS_Store
+new file mode 100644
+index 0000000..4ba9126
+Binary files /dev/null and b/node_modules/gen-toc/build/src/.DS_Store differ
+diff --git a/node_modules/gen-toc/build/src/cli/index.js b/node_modules/gen-toc/build/src/cli/index.js
+index 1893a28..372cf4e 100644
+--- a/node_modules/gen-toc/build/src/cli/index.js
++++ b/node_modules/gen-toc/build/src/cli/index.js
+@@ -86,7 +86,7 @@ function run() {
+                             return __generator(this, function (_a) {
+                                 switch (_a.label) {
+                                     case 0:
+-                                        attached = genToc_1.default(data, { noFormat: hasNoFormatOption });
++                                        attached = genToc_1.default(data, { noFormat: true });
+                                         if (!hasWriteOption) return [3 /*break*/, 2];
+                                         filename = filenames[i];
+                                         return [4 /*yield*/, writeFile(filename, attached)];
+diff --git a/node_modules/gen-toc/build/src/lib/.DS_Store b/node_modules/gen-toc/build/src/lib/.DS_Store
+new file mode 100644
+index 0000000..b3645b2
+Binary files /dev/null and b/node_modules/gen-toc/build/src/lib/.DS_Store differ
+diff --git a/node_modules/gen-toc/build/src/lib/remark.js b/node_modules/gen-toc/build/src/lib/remark.js
+index cd1bac1..cfa819a 100644
+--- a/node_modules/gen-toc/build/src/lib/remark.js
++++ b/node_modules/gen-toc/build/src/lib/remark.js
+@@ -13,7 +13,7 @@ function parse(source) {
+ }
+ exports.parse = parse;
+ function stringifyFromAst(ast) {
+-    var processor = unified_1.default().use(remark_stringify_1.default);
++    var processor = unified_1.default().use(remark_stringify_1.default, { fences: true, unsafe: [] });
+     var text = processor.stringify(ast);
+     return text;
+ }
+diff --git a/node_modules/gen-toc/build/src/lib/toc/convertToTocAst.js b/node_modules/gen-toc/build/src/lib/toc/convertToTocAst.js
+index e8231bd..9e42467 100644
+--- a/node_modules/gen-toc/build/src/lib/toc/convertToTocAst.js
++++ b/node_modules/gen-toc/build/src/lib/toc/convertToTocAst.js
+@@ -1,4 +1,5 @@
+ "use strict";
++var prepare = function (a) { return a.replaceAll(/[^a-zA-Zа-яА-Я0-9 ]/g, '').replaceAll(' ', '-').toLowerCase() }
+ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+@@ -9,7 +10,7 @@ function buildListFromHeadingTree(nodes) {
+         return node.children && node.children.length !== 0
+             ? unist_builder_1.default("listitem", [
+                 unist_builder_1.default("paragraph", [
+-                    unist_builder_1.default("link", { url: "#" + node.value }, [
++                    unist_builder_1.default("link", { url: "#" + prepare(node.value) }, [
+                         unist_builder_1.default("text", { value: node.value })
+                     ])
+                 ]),
+@@ -17,7 +18,7 @@ function buildListFromHeadingTree(nodes) {
+             ])
+             : unist_builder_1.default("listitem", [
+                 unist_builder_1.default("paragraph", [
+-                    unist_builder_1.default("link", { url: "#" + node.value }, [
++                    unist_builder_1.default("link", { url: "#" + prepare(node.value) }, [
+                         unist_builder_1.default("text", { value: node.value })
+                     ])
+                 ])
+diff --git a/node_modules/gen-toc/build/src/lib/toc/findTocMarkerNode.js b/node_modules/gen-toc/build/src/lib/toc/findTocMarkerNode.js
+index 9d48ca0..c2d5900 100644
+--- a/node_modules/gen-toc/build/src/lib/toc/findTocMarkerNode.js
++++ b/node_modules/gen-toc/build/src/lib/toc/findTocMarkerNode.js
+@@ -10,7 +10,7 @@ function getMarkdownCommentValue(text) {
+     }
+ }
+ function isSpecialTocWord(text) {
+-    var specialTocWords = ["Table of Contents"];
++    var specialTocWords = ["Table of Contents", "Таблица контента"];
+     return specialTocWords.includes(text);
+ }
+ function isTocNode(node) {

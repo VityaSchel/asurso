@@ -2,34 +2,35 @@
 
 Сделан мной потому что я хотел посмотреть что у меня выйдет по информатике если я забью на все контрольные по питону.
 
-## Table of Contents
+## Таблица контента
 
-- [Установка ](#Установка )
-- [Использование](#Использование)
-- [Документация](#Документация)
+-   [Установка ](#установка)
+-   [Использование](#использование)
+-   [Документация](#документация)
 
-  - [login(tokens?: TokensObject): Promise](<#login(tokens?: TokensObject): Promise>)
-  - [Interface TokensObject](<#Interface TokensObject>)
-  - [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise](<#getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise>)
-  - [Interface Diary](<#Interface Diary>)
-  - [Interface DiaryDay](<#Interface DiaryDay>)
-  - [Interface DiaryDayLesson](<#Interface DiaryDayLesson>)
-  - [Interface Assignment](<#Interface Assignment>)
-  - [Interface Mark](<#Interface Mark>)
-  - [getStudentId(): Promise](<#getStudentId(): Promise>)
-  - [getAssignmentDetails(assignmentID): Promise](<#getAssignmentDetails(assignmentID): Promise>)
-  - [Interface AssignmentDetails](<#Interface AssignmentDetails>)
-  - [getUserProfile(studentID: number): Promise](<#getUserProfile(studentID: number): Promise>)
-  - [Interface Profile](<#Interface Profile>)
-  - [getUsersOnline(): Promise&lt;Array](<#getUsersOnline(): Promise<Array>)
-  - [Interface OnlineUser](<#Interface OnlineUser>)
-
-- [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](<#getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise>)
-- [Примеры](#Примеры)
+    -   [login(tokens?: TokensObject): Promise](#logintokens-tokensobject-promise)
+    -   [Interface TokensObject](#interface-tokensobject)
+    -   [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promise)
+    -   [Interface Diary](#interface-diary)
+    -   [Interface DiaryDay](#interface-diaryday)
+    -   [Interface DiaryDayLesson](#interface-diarydaylesson)
+    -   [Interface Assignment](#interface-assignment)
+    -   [Interface Mark](#interface-mark)
+    -   [getStudentId(): Promise](#getstudentid-promise)
+    -   [getAssignmentDetails(assignmentID): Promise](#getassignmentdetailsassignmentid-promise)
+    -   [Interface AssignmentDetails](#interface-assignmentdetails)
+    -   [getUserProfile(studentID?: number = this.studentID): Promise](#getuserprofilestudentid-number--thisstudentid-promise)
+    -   [Interface Profile](#interface-profile)
+    -   [getUsersOnline(): Promise&lt;Array](#getusersonline-promisearray)
+    -   [Interface OnlineUser](#interface-onlineuser)
+-   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promise)
+-   [Примеры](#примеры)
 
 ## Установка 
 
-    npm i asurso
+```
+npm i asurso
+```
 
 ## Использование
 
@@ -66,8 +67,8 @@ await api.login();
 
 Поля:
 
-- atKey: string (Ключ at, пересылаемый в заголовке)
-- sessionToken: string (Токен авторизации, получаемый из куки браузера)
+-   atKey: string (Ключ at, пересылаемый в заголовке)
+-   sessionToken: string (Токен авторизации, получаемый из куки браузера)
 
 Пример:
 
@@ -135,12 +136,12 @@ await api.login();
 
 Поля:
 
-- className: string (Имя класса)
-- laAssigns: Array&lt;?> (Неизвестно)
-- termName: string (Описание дат, например четверть или полугодие)
-- weekDays: Array<DiaryDay> (Дни в дневнике)
-- weekStart: string (Начало дат)
-- weekEnd: string (Конец дат)
+-   className: string (Имя класса)
+-   laAssigns: Array&lt;?> (Неизвестно)
+-   termName: string (Описание дат, например четверть или полугодие)
+-   weekDays: Array<DiaryDay> (Дни в дневнике)
+-   weekStart: string (Начало дат)
+-   weekEnd: string (Конец дат)
 
 ### Interface DiaryDay
 
@@ -148,8 +149,8 @@ await api.login();
 
 Поля:
 
-- date: string (Дата в формате ISO)
-- lessons: Array<DiaryDayLesson> (Уроки в дне)
+-   date: string (Дата в формате ISO)
+-   lessons: Array<DiaryDayLesson> (Уроки в дне)
 
 ### Interface DiaryDayLesson
 
@@ -157,15 +158,15 @@ await api.login();
 
 Поля:
 
-- classmeetingId: number (ID урока)
-- day: string (Дата урока)
-- number: number (Порядковый номер урока в дне)
-- subjectName: string (Название урока)
-- relay: number (Неизвестно)
-- room: number | null (Номер аудитории)
-- startTime: string (Время старта урока)
-- endTime: string (Время окончания урока)
-- assignments: Array<Assignment> (Занятие на уроке)
+-   classmeetingId: number (ID урока)
+-   day: string (Дата урока)
+-   number: number (Порядковый номер урока в дне)
+-   subjectName: string (Название урока)
+-   relay: number (Неизвестно)
+-   room: number | null (Номер аудитории)
+-   startTime: string (Время старта урока)
+-   endTime: string (Время окончания урока)
+-   assignments: Array<Assignment> (Занятие на уроке)
 
 ### Interface Assignment
 
@@ -181,13 +182,13 @@ await api.login();
 
 Поля:
 
-- id: number (ID задания)
-- typeId: number (Тип задания)
-- assignmentName: string (Название задания или содержание)
-- weight: number (Вес оценки, но он всегда равен 0),
-- dueDate: string (Дата задания, до которого его надо сдать),
-- classMeetingId: number (ID из DiaryDayLesson),
-- mark?: Mark (Информация об оценке)
+-   id: number (ID задания)
+-   typeId: number (Тип задания)
+-   assignmentName: string (Название задания или содержание)
+-   weight: number (Вес оценки, но он всегда равен 0),
+-   dueDate: string (Дата задания, до которого его надо сдать),
+-   classMeetingId: number (ID из DiaryDayLesson),
+-   mark?: Mark (Информация об оценке)
 
 ### Interface Mark
 
@@ -197,11 +198,11 @@ await api.login();
 
 Поля:
 
-- assignmentId: number (ID задания из Assignment),
-- studentId: number (ID студента),
-- mark: number (Оценка от 1 до 5 и еще есть точка, но я не знаю какой у нее номер),
-- resultScore: ? | null (Неизвестно),
-- dutyMark: boolean (Неизвестно)
+-   assignmentId: number (ID задания из Assignment),
+-   studentId: number (ID студента),
+-   mark: number (Оценка от 1 до 5 и еще есть точка, но я не знаю какой у нее номер),
+-   resultScore: ? | null (Неизвестно),
+-   dutyMark: boolean (Неизвестно)
 
 ### getStudentId(): Promise<Number>
 
@@ -244,47 +245,94 @@ await api.login();
 
 Поля:
 
-- id: number (ID задания на уроке)
-- assignmentName: string (Тема задания на уроке)
-- activityName: ? | null (Неизвестно)
-- problemName: ? | null (Неизвестно)
-- subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
-- teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
-- productId: ? | null (Неизвестно)
-- isDeleted: boolean (Неизвестно)
-- weight: number (Вес оценки: 10/20/40)
-- date: string (Дата)
-- description: ? | null (Неизвестно)
-- attachments: Array&lt;?> (Неизвестно)
+-   id: number (ID задания на уроке)
+-   assignmentName: string (Тема задания на уроке)
+-   activityName: ? | null (Неизвестно)
+-   problemName: ? | null (Неизвестно)
+-   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+-   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+-   productId: ? | null (Неизвестно)
+-   isDeleted: boolean (Неизвестно)
+-   weight: number (Вес оценки: 10/20/40)
+-   date: string (Дата)
+-   description: ? | null (Неизвестно)
+-   attachments: Array&lt;?> (Неизвестно)
 
-### getUserProfile(studentID: number): Promise<Profile>
+### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
 
-позже
+Получение профиля пользователя по studentID. Если оставить пустым аргумент метода, будет возвращен профиль авторизованного пользователя.
 
 ### Interface Profile
 
-позжеее
+Объект с информацией о пользователе, полученной через метод getUserProfile
+
+Поля:
+
+-   id: number (Неизвестно)
+-   studentId: number (ID студента)
+-   startDate: string (Наверное кто что то перепутал)
+-   endDate: string
+-   status: object&lt;{ id: number, name: string }> (Неизвестно)
+-   statusStr: string (Неизвестно)
+-   number: string (Неизвестно)
+-   studentFirstName: null
+-   studentLastName: null
+-   studentMiddleName: null
+-   studentFio: null
+-   studentBirthDate: null
+-   currentMunicipalitet: null
+-   addCertifCategoryId: null
+-   addCertifCategoryName: null
+-   parentEmail: null
+-   pdf: null
+
+Пример:
+
+```javascript
+{
+  id: 0,
+  studentId: 592640,
+  startDate: "0001-01-01T00:00:00",
+  endDate: "0001-01-01T00:00:00",
+  status: {
+      id: 0,
+      name: "Заморожен"
+  },
+  statusStr: "Не использован",
+  number: "4762607874",
+  studentFirstName: null,
+  studentLastName: null,
+  studentMiddleName: null,
+  studentFio: null,
+  studentBirthDate: null,
+  currentMunicipalitet: null,
+  addCertifCategoryId: null,
+  addCertifCategoryName: null,
+  parentEmail: null,
+  pdf: null
+}
+```
 
 ### getUsersOnline(): Promise&lt;Array<OnlineUser>>
 
-<https://asurso.ru/webapi/context/activeSessions> завтра все распишу если не надоест
-
 ### Interface OnlineUser
 
-    {
-        "schoolId": 257,
-        "eoName": null,
-        "at": null,
-        "userId": 123456,
-        "loginName": null,
-        "nickName": "Щелочков Виктор",
-        "loginTime": null,
-        "lastAccessTime": "0001-01-01T00:00:00",
-        "ip": null,
-        "roles": "Ученик",
-        "eMs": "Самарское управление МОиН СО",
-        "timeOut": 3600
-    }
+```javascript
+{
+  schoolId: 257,
+  eoName: null,
+  at: null,
+  userId: 123456,
+  loginName: null,
+  nickName: "Щелочков Виктор",
+  loginTime: null,
+  lastAccessTime: "0001-01-01T00:00:00",
+  ip: null,
+  roles: "Ученик",
+  eMs: "Самарское управление МОиН СО",
+  timeOut: 3600
+}
+```
 
 ## getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
 
