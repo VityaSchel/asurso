@@ -4,7 +4,7 @@
 
 ## Таблица контента
 
--   [Установка](#установка)
+-   [Установка ](#установка)
 -   [Использование](#использование)
 -   [Документация](#документация)
 
@@ -17,16 +17,16 @@
     -   [Interface Assignment](#interface-assignment)
     -   [Interface Mark](#interface-mark)
     -   [getStudentId(): Promise](#getstudentid-promise)
-    -   [getAssignmentDetails(assignmentID): Promise](#getassignmentdetailsassignmentid-promise)
+    -   [getAssignmentDetails(assignmentID: number): Promise](#getassignmentdetailsassignmentid-number-promise)
     -   [Interface AssignmentDetails](#interface-assignmentdetails)
     -   [getUserProfile(studentID?: number = this.studentID): Promise](#getuserprofilestudentid-number--thisstudentid-promise)
     -   [Interface Profile](#interface-profile)
-    -   [getUsersOnline(): Promise<Array>](#getusersonline-promisearray)
+    -   [getUsersOnline(): Promise&lt;Array](#getusersonline-promisearray)
     -   [Interface OnlineUser](#interface-onlineuser)
 -   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promise)
 -   [Примеры](#примеры)
 
-## Установка 
+## Установка
 
 ```
 npm i asurso
@@ -137,7 +137,7 @@ await api.login();
 Поля:
 
 -   className: string (Имя класса)
--   laAssigns: Array<?> (Неизвестно)
+-   laAssigns: Array&lt;?> (Неизвестно)
 -   termName: string (Описание дат, например четверть или полугодие)
 -   weekDays: Array<DiaryDay> (Дни в дневнике)
 -   weekStart: string (Начало дат)
@@ -249,14 +249,14 @@ await api.login();
 -   assignmentName: string (Тема задания на уроке)
 -   activityName: ? | null (Неизвестно)
 -   problemName: ? | null (Неизвестно)
--   subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
--   teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+-   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+-   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
 -   productId: ? | null (Неизвестно)
 -   isDeleted: boolean (Неизвестно)
 -   weight: number (Вес оценки: 10/20/40)
 -   date: string (Дата)
 -   description: ? | null (Неизвестно)
--   attachments: Array<?> (Неизвестно)
+-   attachments: Array&lt;?> (Неизвестно)
 
 ### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
 
@@ -272,7 +272,7 @@ await api.login();
 -   studentId: number (ID студента)
 -   startDate: string (Наверное кто что то перепутал)
 -   endDate: string
--   status: object<{ id: number, name: string }> (Неизвестно)
+-   status: object&lt;{ id: number, name: string }> (Неизвестно)
 -   statusStr: string (Неизвестно)
 -   number: string (Неизвестно)
 -   studentFirstName: null
@@ -313,7 +313,7 @@ await api.login();
 }
 ```
 
-### getUsersOnline(): Promise<Array<OnlineUser>>
+### getUsersOnline(): Promise&lt;Array<OnlineUser>>
 
 Получение списка пользователей, которые сейчас онлайн в системе.
 
@@ -321,18 +321,18 @@ await api.login();
 
 Поля:
 
-- schoolId: number (ID образовательной организации)
-- eoName: null (Неизвестно)
-- at: null (Неизвестно)
-- userId: number (ID пользователя)
-- loginName: null (Неизвестно)
-- nickName: string (Имя пользователя)
-- loginTime: null (Неизвестно)
-- lastAccessTime: string (Ненужная дата)
-- ip: null (Предположительно, IP-адрес пользователя, виден администратору)
-- roles: string (Роли пользователя)
-- eMs: string (Название администратора сети)
-- timeOut: number (Тайм-аут)
+-   schoolId: number (ID образовательной организации)
+-   eoName: null (Неизвестно)
+-   at: null (Неизвестно)
+-   userId: number (ID пользователя)
+-   loginName: null (Неизвестно)
+-   nickName: string (Имя пользователя)
+-   loginTime: null (Неизвестно)
+-   lastAccessTime: string (Ненужная дата)
+-   ip: null (Предположительно, IP-адрес пользователя, виден администратору)
+-   roles: string (Роли пользователя)
+-   eMs: string (Название администратора сети)
+-   timeOut: number (Тайм-аут)
 
 Пример:
 
