@@ -43,6 +43,14 @@ export default class Login {
       this.atKey = loginResult.at
       this.sessionToken = cookie.parse(loginAttempt.headers.get('set-cookie'))['ESRNSec']
     }
+    this.studentId = await this.getStudentId()
     return { atKey: this.atKey, sessionToken: this.sessionToken }
+  }
+
+  async getStudentId() {
+    const initResponse = await fetch('https://asurso.ru/webapi/student/diary/init')
+    const sessionDetails = await initResponse.json()
+    const studentId = sessionDetails.students[0].studentId
+    return studentId
   }
 }

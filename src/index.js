@@ -1,6 +1,10 @@
 import { aggregation } from './utils.js'
 import Login from './LoginClass.js'
+import Diary from './DiaryClass.js'
 import * as yup from 'yup'
+import nodefetch from 'node-fetch'
+import _ from 'lodash'
+import cookie from 'cookie'
 
 class BaseClass {
   constructor(loginDetails) {
@@ -15,12 +19,20 @@ class BaseClass {
       password: yup.string().required(),
     })
 
-    schema.validate(loginDetails)
+    schema.validateSync(loginDetails)
     this.loginDetails = loginDetails
+  }
+
+  async fetch(url, options) { // private, do not place # before method name
+    _.set(options, 'headers.at', this.atKey)
+    _.set(options, 'headers.Cookie', cookie.serialize('ESRNSec', this.sessionToken))
+    const response = await nodefetch(url, options)
+    return await response.json()
   }
 }
 
 export default class ASURSO extends aggregation(
   BaseClass,
-  Login
+  Login,
+  Diary
 ) {}

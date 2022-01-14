@@ -15,3 +15,4 @@ const api = new ASURSO({
 const existingSession = { atKey: process.env.AT, sessionToken: process.env.SESSION_TOKEN }
 
 await api.login(existingSession)
+console.log(await api.getDiary(209935, new Date(), new Date()))
