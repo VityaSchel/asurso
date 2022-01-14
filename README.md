@@ -4,7 +4,7 @@
 
 ## Таблица контента
 
--   [Установка ](#установка)
+-   [Установка](#установка)
 -   [Использование](#использование)
 -   [Документация](#документация)
 
@@ -21,7 +21,7 @@
     -   [Interface AssignmentDetails](#interface-assignmentdetails)
     -   [getUserProfile(studentID?: number = this.studentID): Promise](#getuserprofilestudentid-number--thisstudentid-promise)
     -   [Interface Profile](#interface-profile)
-    -   [getUsersOnline(): Promise&lt;Array](#getusersonline-promisearray)
+    -   [getUsersOnline(): Promise<Array>](#getusersonline-promisearray)
     -   [Interface OnlineUser](#interface-onlineuser)
 -   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promise)
 -   [Примеры](#примеры)
@@ -137,7 +137,7 @@ await api.login();
 Поля:
 
 -   className: string (Имя класса)
--   laAssigns: Array&lt;?> (Неизвестно)
+-   laAssigns: Array<?> (Неизвестно)
 -   termName: string (Описание дат, например четверть или полугодие)
 -   weekDays: Array<DiaryDay> (Дни в дневнике)
 -   weekStart: string (Начало дат)
@@ -206,9 +206,9 @@ await api.login();
 
 ### getStudentId(): Promise<Number>
 
-Получить ID студента, который авторизован в данный момент. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
+Получить ID студента, который авторизован в данный момент с помощью запроса на сервер. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
 
-### getAssignmentDetails(assignmentID): Promise<AssignmentDetails>
+### getAssignmentDetails(assignmentID: number): Promise<AssignmentDetails>
 
 Получить подробную информацию о задании на уроке.
 
@@ -249,14 +249,14 @@ await api.login();
 -   assignmentName: string (Тема задания на уроке)
 -   activityName: ? | null (Неизвестно)
 -   problemName: ? | null (Неизвестно)
--   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
--   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+-   subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+-   teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
 -   productId: ? | null (Неизвестно)
 -   isDeleted: boolean (Неизвестно)
 -   weight: number (Вес оценки: 10/20/40)
 -   date: string (Дата)
 -   description: ? | null (Неизвестно)
--   attachments: Array&lt;?> (Неизвестно)
+-   attachments: Array<?> (Неизвестно)
 
 ### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
 
@@ -272,7 +272,7 @@ await api.login();
 -   studentId: number (ID студента)
 -   startDate: string (Наверное кто что то перепутал)
 -   endDate: string
--   status: object&lt;{ id: number, name: string }> (Неизвестно)
+-   status: object<{ id: number, name: string }> (Неизвестно)
 -   statusStr: string (Неизвестно)
 -   number: string (Неизвестно)
 -   studentFirstName: null
@@ -313,9 +313,28 @@ await api.login();
 }
 ```
 
-### getUsersOnline(): Promise&lt;Array<OnlineUser>>
+### getUsersOnline(): Promise<Array<OnlineUser>>
+
+Получение списка пользователей, которые сейчас онлайн в системе.
 
 ### Interface OnlineUser
+
+Поля:
+
+- schoolId: number (ID образовательной организации)
+- eoName: null (Неизвестно)
+- at: null (Неизвестно)
+- userId: number (ID пользователя)
+- loginName: null (Неизвестно)
+- nickName: string (Имя пользователя)
+- loginTime: null (Неизвестно)
+- lastAccessTime: string (Ненужная дата)
+- ip: null (Предположительно, IP-адрес пользователя, виден администратору)
+- roles: string (Роли пользователя)
+- eMs: string (Название администратора сети)
+- timeOut: number (Тайм-аут)
+
+Пример:
 
 ```javascript
 {

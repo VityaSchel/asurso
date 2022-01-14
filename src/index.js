@@ -1,6 +1,7 @@
 import { aggregation } from './utils.js'
 import Login from './LoginClass.js'
 import Diary from './DiaryClass.js'
+import Users from './UsersClass.js'
 import * as yup from 'yup'
 import nodefetch from 'node-fetch'
 import _ from 'lodash'
@@ -34,5 +35,6 @@ class BaseClass {
 export default class ASURSO extends aggregation(
   BaseClass,
   Login,
-  Diary
+  Diary,
+  Users
 ) {}

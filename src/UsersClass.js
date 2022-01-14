@@ -3,28 +3,17 @@ import * as yup from 'yup'
 
 export default class UsersClass {
   async getUserProfile(studentID) {
-    await validateSchema({ studentID: yup.number() }, { studentID }, ['studentID'])
+    await validateSchema([
+      ['studentID', studentID, yup.number()]
+    ])
     if(!studentID) studentID = this.studentID
 
-    const diary = await this.fetch(`https://asurso.ru/webapi/educcertificates/student/${studentID}`)
-    return diary
+    const profile = await this.fetch(`https://asurso.ru/webapi/educcertificates/student/${studentID}`)
+    return profile
   }
 
   async getUsersOnline() {
-    try { await yup.number().validate(studentID) } catch(e) { e.path = 'studentID'; throw e }
-    if(!studentID) studentID = this.studentID
-
-    const query = {
-      yearId,
-      studentId: this.studentId,
-      weekStart: formatDate(start),
-      weekEnd: formatDate(end),
-      withLaAssigns,
-    }
-    const diary = await this.fetch(`https://asurso.ru/webapi/educcertificates/student/${studentID}`)
-    return diary
+    const usersOnline = await this.fetch('https://asurso.ru/webapi/context/activeSessions')
+    return usersOnline
   }
 }
-
-
-https://asurso.ru/webapi/context/activeSessions

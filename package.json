@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "test": "node test/index.js",
-    "prepublishOnly": "babel src --out-dir lib && find *.md -exec gen-toc --noformat --write {} \\;",
+    "build": "babel src --out-dir lib",
+    "gen-toc": "find *.md -exec gen-toc --noformat --write {} \\;",
+    "prepublishOnly": "npm run build && npm run gen-toc",
     "postinstall": "patch-package"
   },
   "repository": {
@@ -28,6 +30,7 @@
   },
   "homepage": "https://github.com/VityaSchel/asurso#readme",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
     "babel-preset-minify": "^0.5.1",
     "dotenv": "^11.0.0",
     "eslint": "^7.32.0",

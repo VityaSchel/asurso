@@ -16,3 +16,6 @@ let existingSession = { atKey: process.env.AT, sessionToken: process.env.SESSION
 
 console.log(await api.login(existingSession))
 console.log(await api.getDiary(209935, new Date(), new Date()))
+console.log((await api.getUsersOnline()).slice(0,5))
+console.log(await api.getUserProfile())
+console.log(await api.getAssignmentDetails(228840479))

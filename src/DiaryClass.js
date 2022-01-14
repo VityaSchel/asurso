@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { dateValidator } from './utils.js'
+import { dateValidator, validateSchema } from './utils.js'
 import * as yup from 'yup'
 
 export default class DiaryClass {
@@ -15,12 +15,24 @@ export default class DiaryClass {
 
     const query = {
       yearId,
-      studentId: this.studentId,
+      studentId: this.studentID,
       weekStart: formatDate(start),
       weekEnd: formatDate(end),
       withLaAssigns,
     }
     const diary = await this.fetch(`https://asurso.ru/webapi/student/diary?${new URLSearchParams(query)}`)
+    return diary
+  }
+
+  async getAssignmentDetails(assignmentID) {
+    await validateSchema([
+      ['assignmentID', assignmentID, yup.number().required()]
+    ])
+
+    const query = {
+      studentId: this.studentID
+    }
+    const diary = await this.fetch(`https://asurso.ru/webapi/student/diary/assigns/${assignmentID}?${new URLSearchParams(query)}`)
     return diary
   }
 }

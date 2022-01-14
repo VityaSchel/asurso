@@ -1,3 +1,5 @@
+import * as yup from 'yup'
+
 export const aggregation = (baseClass, ...mixins) => {
   class base extends baseClass {
     constructor (...args) {
@@ -9,11 +11,11 @@ export const aggregation = (baseClass, ...mixins) => {
   }
   let copyProps = (target, source) => {  // this function copies all properties and symbols, filtering out some special ones
     Object.getOwnPropertyNames(source)
-        .concat(Object.getOwnPropertySymbols(source))
-        .forEach((prop) => {
-         if (!prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
+      .concat(Object.getOwnPropertySymbols(source))
+      .forEach((prop) => {
+        if (!prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
           Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))
-         })
+      })
   }
   mixins.forEach((mixin) => { // outside contructor() to allow aggregation(A,B,C).staticFunction() to be called etc.
     copyProps(base.prototype, mixin.prototype)
@@ -22,9 +24,10 @@ export const aggregation = (baseClass, ...mixins) => {
   return base
 }
 
-export const validateSchema = async (schema, values, order) => {
-  for (property of order) {
-    try { await schema[property].validate(values[property]) } catch(e) { e.path = property; throw e }
+export const validateSchema = async (schema) => {
+  for (let property of schema) {
+    const [propertyName, value, validator] = property
+    try { await validator.validate(value) } catch(e) { e.path = propertyName; throw e }
   }
 }
 
