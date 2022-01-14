@@ -3,15 +3,25 @@ new file mode 100644
 index 0000000..e69de29
 diff --git a/node_modules/gen-toc/build/.DS_Store b/node_modules/gen-toc/build/.DS_Store
 new file mode 100644
-index 0000000..e69de29
+index 0000000..846aefb
+Binary files /dev/null and b/node_modules/gen-toc/build/.DS_Store differ
 diff --git a/node_modules/gen-toc/build/src/.DS_Store b/node_modules/gen-toc/build/src/.DS_Store
 new file mode 100644
-index 0000000..4ba9126
+index 0000000..60611e9
 Binary files /dev/null and b/node_modules/gen-toc/build/src/.DS_Store differ
 diff --git a/node_modules/gen-toc/build/src/cli/index.js b/node_modules/gen-toc/build/src/cli/index.js
-index 1893a28..372cf4e 100644
+index 1893a28..0308d0f 100644
 --- a/node_modules/gen-toc/build/src/cli/index.js
 +++ b/node_modules/gen-toc/build/src/cli/index.js
+@@ -56,7 +56,7 @@ function readFile(path) {
+         fs_1.default.readFile(path, "utf8", function (error, data) {
+             if (error)
+                 reject(error);
+-            resove(data);
++            resove(data.replaceAll(/</g, '⎨').replaceAll(/>/g, '⎬'));
+         });
+     });
+ }
 @@ -86,7 +86,7 @@ function run() {
                              return __generator(this, function (_a) {
                                  switch (_a.label) {
@@ -21,12 +31,25 @@ index 1893a28..372cf4e 100644
                                          if (!hasWriteOption) return [3 /*break*/, 2];
                                          filename = filenames[i];
                                          return [4 /*yield*/, writeFile(filename, attached)];
+diff --git a/node_modules/gen-toc/build/src/genToc.js b/node_modules/gen-toc/build/src/genToc.js
+index 9337929..21edfc1 100644
+--- a/node_modules/gen-toc/build/src/genToc.js
++++ b/node_modules/gen-toc/build/src/genToc.js
+@@ -24,7 +24,7 @@ function genToc(source, options) {
+     var convertedAst = insertTocAstToBaseAst_1.default(cleanAst, tocAst, markerNode);
+     var text = remark_1.stringifyFromAst(convertedAst);
+     if (options.noFormat)
+-        return text;
++        return text.replaceAll('⎨', '&lt;').replaceAll('⎬', '&gt;')
+     var formatted = prettier_1.default.format(text, { parser: "markdown" });
+     return formatted;
+ }
 diff --git a/node_modules/gen-toc/build/src/lib/.DS_Store b/node_modules/gen-toc/build/src/lib/.DS_Store
 new file mode 100644
-index 0000000..b3645b2
+index 0000000..2746af7
 Binary files /dev/null and b/node_modules/gen-toc/build/src/lib/.DS_Store differ
 diff --git a/node_modules/gen-toc/build/src/lib/remark.js b/node_modules/gen-toc/build/src/lib/remark.js
-index cd1bac1..cfa819a 100644
+index cd1bac1..46743d2 100644
 --- a/node_modules/gen-toc/build/src/lib/remark.js
 +++ b/node_modules/gen-toc/build/src/lib/remark.js
 @@ -13,7 +13,7 @@ function parse(source) {
@@ -34,7 +57,7 @@ index cd1bac1..cfa819a 100644
  exports.parse = parse;
  function stringifyFromAst(ast) {
 -    var processor = unified_1.default().use(remark_stringify_1.default);
-+    var processor = unified_1.default().use(remark_stringify_1.default, { fences: true, unsafe: [] });
++    var processor = unified_1.default().use(remark_stringify_1.default, { fences: true });
      var text = processor.stringify(ast);
      return text;
  }

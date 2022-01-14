@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -10,6 +10,7 @@
   "scripts": {
     "test": "node test/index.js",
     "build": "babel src --out-dir lib",
+    "a": "gen-toc README.md",
     "gen-toc": "find *.md -exec gen-toc --noformat --write {} \\;",
     "prepublishOnly": "npm run build && npm run gen-toc",
     "postinstall": "patch-package"

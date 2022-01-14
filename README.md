@@ -12,22 +12,22 @@
 -   [Использование](#использование)
 -   [Документация](#документация)
 
-    -   [login(tokens?: TokensObject): Promise](#logintokens-tokensobject-promise)
+    -   [login(tokens?: TokensObject): Promise&lt;TokensObject&gt;](#logintokens-tokensobject-promisetokensobject)
     -   [Interface TokensObject](#interface-tokensobject)
-    -   [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promise)
+    -   [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promisediary)
     -   [Interface Diary](#interface-diary)
     -   [Interface DiaryDay](#interface-diaryday)
     -   [Interface DiaryDayLesson](#interface-diarydaylesson)
     -   [Interface Assignment](#interface-assignment)
     -   [Interface Mark](#interface-mark)
-    -   [getStudentId(): Promise](#getstudentid-promise)
-    -   [getAssignmentDetails(assignmentID: number): Promise](#getassignmentdetailsassignmentid-number-promise)
+    -   [getStudentId(): Promise&lt;Number&gt;](#getstudentid-promisenumber)
+    -   [getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;](#getassignmentdetailsassignmentid-number-promiseassignmentdetails)
     -   [Interface AssignmentDetails](#interface-assignmentdetails)
-    -   [getUserProfile(studentID?: number = this.studentID): Promise](#getuserprofilestudentid-number--thisstudentid-promise)
+    -   [getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;](#getuserprofilestudentid-number--thisstudentid-promiseprofile)
     -   [Interface Profile](#interface-profile)
     -   [getUsersOnline(): Promise](#getusersonline-promise)
     -   [Interface OnlineUser](#interface-onlineuser)
-    -   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promise)
+    -   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promisemessagesresult)
     -   [Interface MessagesResult](#interface-messagesresult)
     -   [Interface Message](#interface-message)
 -   [Примеры](#примеры)
@@ -66,7 +66,7 @@ await api.login();
 
 ## Документация
 
-### login(tokens?: TokensObject): Promise<TokensObject>
+### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
 
 Метод, который нужно вызвать перед использованием библиотеки. Создает новую сессию при помощи указанных в конструкторе данных, если не передан объект tokens, иначе использует существующую сессию.
 
@@ -88,7 +88,7 @@ await api.login();
 }
 ```
 
-### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise<Diary>
+### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;
 
 Пример:
 
@@ -146,9 +146,9 @@ await api.login();
 Поля:
 
 -   className: string (Имя класса)
--   laAssigns: Array&lt;?> (Неизвестно)
+-   laAssigns: Array&lt;?&gt; (Неизвестно)
 -   termName: string (Описание дат, например четверть или полугодие)
--   weekDays: Array<DiaryDay> (Дни в дневнике)
+-   weekDays: Array&lt;DiaryDay&gt; (Дни в дневнике)
 -   weekStart: string (Начало дат)
 -   weekEnd: string (Конец дат)
 
@@ -159,7 +159,7 @@ await api.login();
 Поля:
 
 -   date: string (Дата в формате ISO)
--   lessons: Array<DiaryDayLesson> (Уроки в дне)
+-   lessons: Array&lt;DiaryDayLesson&gt; (Уроки в дне)
 
 ### Interface DiaryDayLesson
 
@@ -175,7 +175,7 @@ await api.login();
 -   room: number | null (Номер аудитории)
 -   startTime: string (Время старта урока)
 -   endTime: string (Время окончания урока)
--   assignments: Array<Assignment> (Занятие на уроке)
+-   assignments: Array&lt;Assignment&gt; (Занятие на уроке)
 
 ### Interface Assignment
 
@@ -213,11 +213,11 @@ await api.login();
 -   resultScore: ? | null (Неизвестно),
 -   dutyMark: boolean (Неизвестно)
 
-### getStudentId(): Promise<Number>
+### getStudentId(): Promise&lt;Number&gt;
 
 Получить ID студента, который авторизован в данный момент с помощью запроса на сервер. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
 
-### getAssignmentDetails(assignmentID: number): Promise<AssignmentDetails>
+### getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;
 
 Получить подробную информацию о задании на уроке.
 
@@ -258,16 +258,16 @@ await api.login();
 -   assignmentName: string (Тема задания на уроке)
 -   activityName: ? | null (Неизвестно)
 -   problemName: ? | null (Неизвестно)
--   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
--   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+-   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }&gt; (Урок)
+-   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }&gt;&gt; (Учителя)
 -   productId: ? | null (Неизвестно)
 -   isDeleted: boolean (Неизвестно)
 -   weight: number (Вес оценки: 10/20/40)
 -   date: string (Дата)
 -   description: ? | null (Неизвестно)
--   attachments: Array&lt;?> (Неизвестно)
+-   attachments: Array&lt;?&gt; (Неизвестно)
 
-### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
+### getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;
 
 Получение профиля пользователя по studentID. Если оставить пустым аргумент метода, будет возвращен профиль авторизованного пользователя.
 
@@ -281,7 +281,7 @@ await api.login();
 -   studentId: number (ID студента)
 -   startDate: string (Наверное кто что то перепутал)
 -   endDate: string
--   status: object&lt;{ id: number, name: string }> (Неизвестно)
+-   status: object&lt;{ id: number, name: string }&gt; (Неизвестно)
 -   statusStr: string (Неизвестно)
 -   number: string (Неизвестно)
 -   studentFirstName: null
@@ -322,7 +322,7 @@ await api.login();
 }
 ```
 
-### getUsersOnline(): Promise&lt;Array<OnlineUser>>
+### getUsersOnline(): Promise&lt;Array&lt;OnlineUser&gt;&gt;
 
 Получение списка пользователей, которые сейчас онлайн в системе.
 
@@ -362,7 +362,7 @@ await api.login();
 }
 ```
 
-### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
+### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;
 
 ПОКА НЕ РАБОТАЕТ, нужно разобраться как логиниться в почту
 
@@ -389,7 +389,7 @@ await api.login();
 
 Поля:
 
--   Records: Array<Message> (Письма)
+-   Records: Array&lt;Message&gt; (Письма)
 -   TotalRecordCount: number (Общее кол-во писем у пользователя)
 -   ResultStatus: number (ID статуса результата)
 -   Result: string (Строка со статусом запроса)
