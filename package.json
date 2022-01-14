@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "test": "node test/index.js",
+    "a": "find *.md -exec gen-toc --write {} \\;",
     "prepublish": "babel src --out-dir lib"
   },
   "repository": {
@@ -28,7 +29,8 @@
   "homepage": "https://github.com/VityaSchel/asurso#readme",
   "devDependencies": {
     "babel-preset-minify": "^0.5.1",
-    "dotenv": "^11.0.0"
+    "dotenv": "^11.0.0",
+    "gen-toc": "^1.0.7"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.8",

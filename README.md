@@ -2,18 +2,36 @@
 
 Сделан мной потому что я хотел посмотреть что у меня выйдет по информатике если я забью на все контрольные по питону.
 
+## Table of Contents
+
+- [Установка ](#Установка )
+- [Использование](#Использование)
+- [Документация](#Документация)
+
+  - [login(tokens?: TokensObject): Promise](<#login(tokens?: TokensObject): Promise>)
+  - [Interface TokensObject](<#Interface TokensObject>)
+  - [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise](<#getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise>)
+  - [Interface Diary](<#Interface Diary>)
+  - [Interface DiaryDay](<#Interface DiaryDay>)
+  - [Interface DiaryDayLesson](<#Interface DiaryDayLesson>)
+  - [Interface Assignment](<#Interface Assignment>)
+  - [Interface Mark](<#Interface Mark>)
+  - [getStudentId(): Promise](<#getStudentId(): Promise>)
+  - [getAssignmentDetails(assignmentID): Promise](<#getAssignmentDetails(assignmentID): Promise>)
+  - [Interface AssignmentDetails](<#Interface AssignmentDetails>)
+
+- [Примеры](#Примеры)
+
 ## Установка 
 
-```
-npm i asurso
-```
+    npm i asurso
 
 ## Использование
 
 Все ID вы можете найти в файле [LOGINIDS.md](LOGINIDS.md), а мои заметки о том, как я реверс-инженерил апи в [HOWITWORKS.md](HOWITWORKS.md)
 
 ```javascript
-import ASURSO from 'asurso'
+import ASURSO from "asurso";
 
 const api = new ASURSO({
   countryID: 2,
@@ -22,14 +40,13 @@ const api = new ASURSO({
   cityID: 2,
   schoolTypeID: 2,
   schoolID: 257,
-  login: 'ЩелочковВ',
-  password: '...'
-})
+  login: "ЩелочковВ",
+  password: "..."
+});
 
-await api.login()
+await api.login();
 
 // Вызов других методов, описанных ниже
-
 ```
 
 ## Документация
@@ -51,8 +68,8 @@ await api.login()
 
 ```javascript
 {
-  atKey: '4012341777721575425550192'
-  sessionToken: 'ESRNSECR93481=ea2dsfidhksf1o239fsusdfhj-ahliwen1'
+  atKey: "4012341777721575425550192";
+  sessionToken: "ESRNSECR93481=ea2dsfidhksf1o239fsusdfhj-ahliwen1";
 }
 ```
 
@@ -114,7 +131,7 @@ await api.login()
 Поля:
 
 - className: string (Имя класса)
-- laAssigns: Array<?> (Неизвестно)
+- laAssigns: Array&lt;?> (Неизвестно)
 - termName: string (Описание дат, например четверть или полугодие)
 - weekDays: Array<DiaryDay> (Дни в дневнике)
 - weekStart: string (Начало дат)
@@ -151,11 +168,11 @@ await api.login()
 
 Известные типы заданий на данный момент:
 
-typeId | Задание
----|---
-3|Домашнее задание
-4|Контрольная работа
-5|Самостоятельная работа
+| typeId | Задание                |
+| ------ | ---------------------- |
+| 3      | Домашнее задание       |
+| 4      | Контрольная работа     |
+| 5      | Самостоятельная работа |
 
 Поля:
 
@@ -226,14 +243,81 @@ typeId | Задание
 - assignmentName: string (Тема задания на уроке)
 - activityName: ? | null (Неизвестно)
 - problemName: ? | null (Неизвестно)
-- subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
-- teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+- subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+- teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
 - productId: ? | null (Неизвестно)
 - isDeleted: boolean (Неизвестно)
 - weight: number (Вес оценки: 10/20/40)
 - date: string (Дата)
 - description: ? | null (Неизвестно)
-- attachments: Array<?> (Неизвестно)
+- attachments: Array&lt;?> (Неизвестно)
+
+### getUserProfile(studentID: number): Promise<Profile>
+
+позже
+
+### Interface Profile
+
+позжеее
+
+### getUsersOnline(): Promise<Array<OnlineUser>>
+
+https://asurso.ru/webapi/context/activeSessions завтра все распишу если не надоест
+
+### Interface OnlineUser
+
+```
+{
+    "schoolId": 257,
+    "eoName": null,
+    "at": null,
+    "userId": 123456,
+    "loginName": null,
+    "nickName": "Щелочков Виктор",
+    "loginTime": null,
+    "lastAccessTime": "0001-01-01T00:00:00",
+    "ip": null,
+    "roles": "Ученик",
+    "eMs": "Самарское управление МОиН СО",
+    "timeOut": 3600
+}
+```
+
+## getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
+
+https://asurso.ru/asp/ajax/GetMessagesAjax.asp?AT=-------&nBoxID=1&jtStartIndex=0&jtPageSize=100&jtSorting=Sent%20DESC
+
+{
+    "Records": [
+        {
+            "MessageId": 20606329,
+            "FromName": "кто (школа)",
+            "FromEOName": "",
+            "Subj": "Re:",
+            "Sent": "27.12.2021 9:05",
+            "Read": "Y",
+            "SentTo": "кому (класс, школа)"
+        },
+        {
+            "MessageId": 14476819,
+            "FromName": "Администратор системы",
+            "FromEOName": "",
+            "Subj": "Отчет об успеваемости и посещаемости ученика",
+            "Sent": "23.10.2020 21:07",
+            "Read": "Y",
+            "SentTo": "Щелочков Виктор"
+        }
+    ],
+    "TotalRecordCount": 2,
+    "ResultStatus": 0,
+    "Result": "OK"
+}
+
+AT: ----
+nBoxID: 1
+jtStartIndex: 0
+jtPageSize: 100
+jtSorting: Sent DESC
 
 ## Примеры
 
