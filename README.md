@@ -181,11 +181,59 @@ typeId | Задание
 - resultScore: ? | null (Неизвестно),
 - dutyMark: boolean (Неизвестно)
 
-### getStudentId()
+### getStudentId(): Promise<Number>
 
+Получить ID студента, который авторизован в данный момент. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
 
+### getAssignmentDetails(assignmentID): Promise<AssignmentDetails>
 
-### getAssignmentDetails
+Получить подробную информацию о задании на уроке.
+
+Пример:
+
+```javascript
+{
+  id: 226673369,
+  assignmentName: "Спортивные игры: баскетбол. Основные фолы в баскетболе",
+  activityName: null,
+  problemName: null,
+  subjectGroup: {
+    id: 5331335,
+    name: "1а/Физическая культура"
+  },
+  teachers: [
+    {
+      id: 593083,
+      name: "Иванов Иван Иванович"
+    }
+  ],
+  productId: null,
+  isDeleted: false,
+  weight: 10,
+  date: "2021-12-22T00:00:00",
+  description: null,
+  attachments: []
+}
+```
+
+### Interface AssignmentDetails
+
+Подробная информация о задании на уроке.
+
+Поля:
+
+- id: number (ID задания на уроке)
+- assignmentName: string (Тема задания на уроке)
+- activityName: ? | null (Неизвестно)
+- problemName: ? | null (Неизвестно)
+- subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+- teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+- productId: ? | null (Неизвестно)
+- isDeleted: boolean (Неизвестно)
+- weight: number (Вес оценки: 10/20/40)
+- date: string (Дата)
+- description: ? | null (Неизвестно)
+- attachments: Array<?> (Неизвестно)
 
 ## Примеры
 
