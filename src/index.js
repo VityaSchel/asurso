@@ -23,7 +23,7 @@ class BaseClass {
     this.loginDetails = loginDetails
   }
 
-  async fetch(url, options) { // private, do not place # before method name
+  async fetch(url, options = {}) { // private, do not place # before method name
     _.set(options, 'headers.at', this.atKey)
     _.set(options, 'headers.Cookie', cookie.serialize('ESRNSec', this.sessionToken))
     const response = await nodefetch(url, options)

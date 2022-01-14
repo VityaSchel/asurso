@@ -1,14 +1,15 @@
 {
   "name": "asurso",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
-  "files": ["lib/index.min.js", "790.index.min.js"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "node test/index.js",
-    "a": "uglifyjs-folder lib",
-    "prepublish": "babel src --out-dir lib && uglifyjs --compress --mangle --compress toplevel,sequences=false -- lib/index.js "
+    "prepublish": "babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -26,14 +27,11 @@
   },
   "homepage": "https://github.com/VityaSchel/asurso#readme",
   "devDependencies": {
-    "dotenv": "^11.0.0",
-    "grunt": "^1.4.1",
-    "grunt-contrib-uglify": "^5.0.1",
-    "grunt-contrib-watch": "^1.1.0",
-    "uglify-js": "^3.14.5",
-    "uglifyjs-folder": "^3.0.0"
+    "babel-preset-minify": "^0.5.1",
+    "dotenv": "^11.0.0"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.16.8",
     "cookie": "^0.4.1",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",

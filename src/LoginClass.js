@@ -48,8 +48,7 @@ export default class Login {
   }
 
   async getStudentId() {
-    const initResponse = await fetch('https://asurso.ru/webapi/student/diary/init')
-    const sessionDetails = await initResponse.json()
+    const sessionDetails = await this.fetch('https://asurso.ru/webapi/student/diary/init')
     const studentId = sessionDetails.students[0].studentId
     return studentId
   }
