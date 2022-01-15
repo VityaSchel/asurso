@@ -3,6 +3,8 @@ import Login from './LoginClass.js'
 import Diary from './DiaryClass.js'
 import Users from './UsersClass.js'
 import Messages from './MessagesClass.js'
+import Portfolio from './PortfolioClass.js'
+import Announcements from './AnnouncementsClass.js'
 import * as yup from 'yup'
 import nodefetch from 'node-fetch'
 import _ from 'lodash'
@@ -25,12 +27,12 @@ class BaseClass {
     this.loginDetails = loginDetails
   }
 
-  async fetch(url, options = {}) { // private, do not place # before method name
+  async fetch(url, options = {}, autoParseJSON = true) { // private, do not place # before method name
     _.set(options, 'headers.at', this.atKey)
     const cookies = options.cookie ?? []
     _.set(options, 'headers.Cookie', [cookie.serialize('ESRNSec', this.sessionToken), ...cookies].join('; '))
     const response = await nodefetch(url, options)
-    return await response.json()
+    return autoParseJSON ? await response.json() : response
   }
 }
 
@@ -39,5 +41,7 @@ export default class ASURSO extends aggregation(
   Login,
   Diary,
   Users,
-  Messages
+  Messages,
+  Portfolio,
+  Announcements
 ) {}

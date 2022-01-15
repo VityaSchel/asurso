@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -10,8 +10,7 @@
   "scripts": {
     "test": "node test/index.js",
     "build": "babel src --out-dir lib",
-    "a": "gen-toc README.md",
-    "gen-toc": "find *.md -exec gen-toc --noformat --write {} \\;",
+    "gen-toc": "find *.md -exec node gentoc.js {} \\;",
     "prepublishOnly": "npm run build && npm run gen-toc",
     "postinstall": "patch-package"
   },
@@ -34,8 +33,7 @@
     "@babel/eslint-parser": "^7.16.5",
     "babel-preset-minify": "^0.5.1",
     "dotenv": "^11.0.0",
-    "eslint": "^7.32.0",
-    "gen-toc": "^1.0.7"
+    "eslint": "^7.32.0"
   },
   "dependencies": {
     "cookie": "^0.4.1",

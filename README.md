@@ -6,34 +6,46 @@
 
 ![image](https://user-images.githubusercontent.com/59040542/149536440-1409c8a3-3cb6-4dc4-92e3-120db4dbd4b1.png)
 
+<!-- TOC-START -->
 ## Таблица контента
 
--   [Установка](#установка)
--   [Использование](#использование)
--   [Документация](#документация)
-
-    -   [login(tokens?: TokensObject): Promise&lt;TokensObject&gt;](#logintokens-tokensobject-promisetokensobject)
-    -   [Interface TokensObject](#interface-tokensobject)
-    -   [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promisediary)
-    -   [Interface Diary](#interface-diary)
-    -   [Interface DiaryDay](#interface-diaryday)
-    -   [Interface DiaryDayLesson](#interface-diarydaylesson)
-    -   [Interface Assignment](#interface-assignment)
-    -   [Interface Mark](#interface-mark)
-    -   [getStudentId(): Promise&lt;Number&gt;](#getstudentid-promisenumber)
-    -   [getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;](#getassignmentdetailsassignmentid-number-promiseassignmentdetails)
-    -   [Interface AssignmentDetails](#interface-assignmentdetails)
-    -   [getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;](#getuserprofilestudentid-number--thisstudentid-promiseprofile)
-    -   [Interface Profile](#interface-profile)
-    -   [getUsersOnline(): Promise](#getusersonline-promise)
-    -   [Interface OnlineUser](#interface-onlineuser)
-    -   [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promisemessagesresult)
-    -   [Interface MessagesResult](#interface-messagesresult)
-    -   [Interface Message](#interface-message)
--   [Примеры](#примеры)
--   [Contributing](#contributing)
--   [Лицензия](#лицензия)
--   [Донатик мне пжпж](#донатик-мне-пжпж)
+- [Неофициальный API АСУ РСО](#неофициальный-api-асу-рсо)
+  - [Установка](#установка)
+  - [Использование](#использование)
+  - [Функции](#функции)
+    - [Что умеет эта библиотека](#что-умеет-эта-библиотека)
+    - [TODO:](#todo)
+  - [Документация](#документация)
+    - [login(tokens?: TokensObject): Promise&lt;TokensObject&gt;](#logintokens-tokensobject-promisetokensobject)
+    - [Interface TokensObject](#interface-tokensobject)
+    - [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promisediary)
+    - [Interface Diary](#interface-diary)
+    - [Interface DiaryDay](#interface-diaryday)
+    - [Interface DiaryDayLesson](#interface-diarydaylesson)
+    - [Interface Assignment](#interface-assignment)
+    - [Interface Mark](#interface-mark)
+    - [getStudentId(): Promise&lt;Number&gt;](#getstudentid-promisenumber)
+    - [getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;](#getassignmentdetailsassignmentid-number-promiseassignmentdetails)
+    - [Interface AssignmentDetails](#interface-assignmentdetails)
+    - [getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;](#getuserprofilestudentid-number--thisstudentid-promiseprofile)
+    - [Interface Profile](#interface-profile)
+    - [getUsersOnline(): Promise&lt;Array&lt;OnlineUser&gt;&gt;](#getusersonline-promisearrayonlineuser)
+    - [Interface OnlineUser](#interface-onlineuser)
+    - [getAnnouncements(take: number, fullVersion?: boolean = false): Promise&lt;Array&lt;Announcement&gt;&gt;](#getannouncementstake-number-fullversion-boolean--false-promisearrayannouncement)
+    - [Interface Announcement](#interface-announcement)
+    - [Interface AnnouncementAttachment](#interface-announcementattachment)
+    - [downloadAnnouncementAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;](#downloadannouncementattachmentattachmentid-number-promisefetchresponse)
+    - [getPortfolio(userID?: number = this.studentID): Promise&lt;Portfolio&gt;](#getportfoliouserid-number--thisstudentid-promiseportfolio)
+    - [Interface Portfolio](#interface-portfolio)
+    - [Interface PortfolioSection](#interface-portfoliosection)
+    - [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promisemessagesresult)
+    - [Interface MessagesResult](#interface-messagesresult)
+    - [Interface Message](#interface-message)
+  - [Примеры](#примеры)
+  - [Contributing](#contributing)
+  - [Лицензия](#лицензия)
+  - [Донатик мне пжпж](#донатик-мне-пжпж)
+<!-- TOC-END -->
 
 ## Установка
 
@@ -64,9 +76,41 @@ await api.login();
 // Вызов других методов, описанных ниже
 ```
 
+## Функции
+
+### Что умеет эта библиотека
+
+Фича|Статус
+---|---
+Вход в аккаунт|✅
+Создание сессии после входа|✅
+Получение дневника: дз, оценки|✅
+Получение файлов в дневнике|✅
+Получение профиля пользователей|✅
+Получение пользователей онлайн|✅
+Получение почты|⌛️
+Отправка почты|⌛️
+Получение новостей|✅
+Получение файлов из новостей|✅
+Получение портфолио (портрет, достижения, коллектор, рабочие материалы)|⌛️
+Получение файлов из портфолио|⌛️
+Получение тем на форуме|⌛️
+Создание тем на форуме|⌛️
+Отправка сообщений в темы на форуме|⌛️
+Загрузка файлов|⌛️
+
+### TODO:
+
+- ~Сделать работающий как часы вход~
+- Переместить документацию в отдельный файл, чтобы оптимизировать размер пакета
+- Нормально организовать сет тестов (unit-тесты, e2e, примеры)
+- Написать примеры
+- Найти кого-нибудь, кто напишет на этой библиотеке свой проект
+- Написать статью об этой ситуации и опубликовать куда-нибудь
+
 ## Документация
 
-### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
+### login(tokens?: TokensObject): Promise<TokensObject>
 
 Метод, который нужно вызвать перед использованием библиотеки. Создает новую сессию при помощи указанных в конструкторе данных, если не передан объект tokens, иначе использует существующую сессию.
 
@@ -88,7 +132,7 @@ await api.login();
 }
 ```
 
-### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;
+### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise<Diary>
 
 Пример:
 
@@ -146,9 +190,9 @@ await api.login();
 Поля:
 
 -   className: string (Имя класса)
--   laAssigns: Array&lt;?&gt; (Неизвестно)
+-   laAssigns: Array<?> (Неизвестно)
 -   termName: string (Описание дат, например четверть или полугодие)
--   weekDays: Array&lt;DiaryDay&gt; (Дни в дневнике)
+-   weekDays: Array<DiaryDay> (Дни в дневнике)
 -   weekStart: string (Начало дат)
 -   weekEnd: string (Конец дат)
 
@@ -159,7 +203,7 @@ await api.login();
 Поля:
 
 -   date: string (Дата в формате ISO)
--   lessons: Array&lt;DiaryDayLesson&gt; (Уроки в дне)
+-   lessons: Array<DiaryDayLesson> (Уроки в дне)
 
 ### Interface DiaryDayLesson
 
@@ -175,7 +219,7 @@ await api.login();
 -   room: number | null (Номер аудитории)
 -   startTime: string (Время старта урока)
 -   endTime: string (Время окончания урока)
--   assignments: Array&lt;Assignment&gt; (Занятие на уроке)
+-   assignments: Array<Assignment> (Занятие на уроке)
 
 ### Interface Assignment
 
@@ -213,11 +257,11 @@ await api.login();
 -   resultScore: ? | null (Неизвестно),
 -   dutyMark: boolean (Неизвестно)
 
-### getStudentId(): Promise&lt;Number&gt;
+### getStudentId(): Promise<Number>
 
 Получить ID студента, который авторизован в данный момент с помощью запроса на сервер. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
 
-### getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;
+### getAssignmentDetails(assignmentID: number): Promise<AssignmentDetails>
 
 Получить подробную информацию о задании на уроке.
 
@@ -258,16 +302,16 @@ await api.login();
 -   assignmentName: string (Тема задания на уроке)
 -   activityName: ? | null (Неизвестно)
 -   problemName: ? | null (Неизвестно)
--   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }&gt; (Урок)
--   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }&gt;&gt; (Учителя)
+-   subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
+-   teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
 -   productId: ? | null (Неизвестно)
 -   isDeleted: boolean (Неизвестно)
 -   weight: number (Вес оценки: 10/20/40)
 -   date: string (Дата)
 -   description: ? | null (Неизвестно)
--   attachments: Array&lt;?&gt; (Неизвестно)
+-   attachments: Array<?> (Неизвестно)
 
-### getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;
+### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
 
 Получение профиля пользователя по studentID. Если оставить пустым аргумент метода, будет возвращен профиль авторизованного пользователя.
 
@@ -281,7 +325,7 @@ await api.login();
 -   studentId: number (ID студента)
 -   startDate: string (Наверное кто что то перепутал)
 -   endDate: string
--   status: object&lt;{ id: number, name: string }&gt; (Неизвестно)
+-   status: object<{ id: number, name: string }> (Неизвестно)
 -   statusStr: string (Неизвестно)
 -   number: string (Неизвестно)
 -   studentFirstName: null
@@ -322,7 +366,7 @@ await api.login();
 }
 ```
 
-### getUsersOnline(): Promise&lt;Array&lt;OnlineUser&gt;&gt;
+### getUsersOnline(): Promise<Array<OnlineUser>>
 
 Получение списка пользователей, которые сейчас онлайн в системе.
 
@@ -362,7 +406,175 @@ await api.login();
 }
 ```
 
-### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;
+### getAnnouncements(take: number, fullVersion?: boolean = false): Promise<Array<Announcement>>
+
+Получение новостей с главной страницы, переменная take указывает количество новостей, которое необходимо вернуть, а fullVersion выполняет неизвестную функцию, которая ничего в ответе от API не меняет.
+
+### Interface Announcement
+
+Объект, содержащий данные о новости, получаемой с помощью getAnnouncements()
+
+Поля:
+- id: number (ID новости)
+- name: string (Название новости)
+- description: string (Описание новости в HTML)
+- postDate: string (Дата публикации)
+- deleteDate: null | string (Дата удаления)
+- author: object<{ id: number, fio: string, nickName: string }> (Автор новости)
+- em: null (Неизвестно)
+- recipientInfo: null (Неизвестно)
+- attachments: Array<AnnouncementAttachment> (Приложенные к новости файлы)
+
+Пример:
+
+```javascript
+{
+  description: "<p>График</p>",
+  postDate: "2022-01-14T09:51:45.563",
+  deleteDate: null,
+  author: {
+    id: 587356,
+    fio: "Владимерко Яна Владимировна",
+    nickName: "Владимерко Яна Владимировна"
+  },
+  em: null,
+  recipientInfo: null,
+  attachments: [],
+  id: 468091,
+  name: "График"
+}
+```
+
+### Interface AnnouncementAttachment
+
+Поля:
+- id: number (ID приложенного файла)
+- name: string (Название файла)
+- originalFileName: string (Имя загруженного файла лол)
+- description: null | string (Описание файла)
+
+Примеры:
+
+```javascript
+{
+  id: 15016512,
+  name: "график 2022.doc",
+  originalFileName: "график-сетка 2022 3ч.doc",
+  description: null
+}
+```
+
+```javascript
+{
+  id: 15016513,
+  name: "График.docx",
+  originalFileName: "График.docx",
+  description: null
+}
+```
+
+```javascript
+{
+  id: 15016517,
+  name: "График КР_начальная школа.doc",
+  originalFileName: "График КР_начальная школа.doc",
+  description: null
+}
+```
+
+### downloadAnnouncementAttachment(attachmentID: number): Promise<FetchResponse>
+
+Скачать приложенный к новости файл. В ответ возвращается обычный ответ от fetch, его нужно парсить с помощью buffer, а дальше уже можно сохранить с помощью fs или blob в зависимости от того, в каком окружении вы используете библиотеку (node или браузер).
+
+### getPortfolio(userID?: number = this.studentID): Promise<Portfolio>
+
+Получить портфолио пользователя. Если не указан userID, то вернется портфолио текущего пользователя, а если указан, то вы получите null и ошибку библиотеки, потому что вы не администратор системы.
+
+
+
+### Interface Portfolio
+
+Объект содержащий данные о портфолио пользователя.
+
+Имейте в виду, что в системе можно создавать собственные разделы.
+
+Поля:
+- id: number (ID портфолио)
+- name: null (Название портфолио)
+- groups: Array<PortfolioSection> (Массив с разделами портфолио)
+
+Пример:
+```javascript
+{
+  id: 291003,
+  name: null,
+  groups: [],
+}
+```
+
+### Interface PortfolioSection
+
+Объект, содержащий данные о разделе портфолио.
+
+Примеры:
+```javascript
+{
+  parentGroupId: 2457271,
+  order: 1,
+  links: [],
+  docs: [],
+  accessType: null,
+  groups: [],
+  id: 2457272,
+  name: "Портрет"
+}
+```
+
+```javascript
+{
+  parentGroupId: 2457271,
+  order: 2,
+  links: [
+    {
+      id: 236941,
+      url: "https://utidteam.com"
+    }
+  ],
+  docs: [],
+  accessType: null,
+  groups: [],
+  id: 2457273,
+  name: "Достижения"
+}
+```
+
+```javascript
+{
+  parentGroupId: 2457271,
+  order: 3,
+  links: [],
+  docs: [],
+  accessType: null,
+  groups: [],
+  id: 2457274,
+  name: "Коллектор"
+}
+```
+
+```javascript
+{
+  parentGroupId: 2457271,
+  order: 4,
+  links: [],
+  docs: [],
+  accessType: null,
+  groups: [],
+  id: 2457275,
+  name: "Рабочие материалы"
+}
+```
+
+### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
 
 ПОКА НЕ РАБОТАЕТ, нужно разобраться как логиниться в почту
 
@@ -389,7 +601,7 @@ await api.login();
 
 Поля:
 
--   Records: Array&lt;Message&gt; (Письма)
+-   Records: Array<Message> (Письма)
 -   TotalRecordCount: number (Общее кол-во писем у пользователя)
 -   ResultStatus: number (ID статуса результата)
 -   Result: string (Строка со статусом запроса)
