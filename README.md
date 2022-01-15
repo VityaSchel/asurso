@@ -110,7 +110,7 @@ await api.login();
 
 ## Документация
 
-### login(tokens?: TokensObject): Promise<TokensObject>
+### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
 
 Метод, который нужно вызвать перед использованием библиотеки. Создает новую сессию при помощи указанных в конструкторе данных, если не передан объект tokens, иначе использует существующую сессию.
 
@@ -132,7 +132,7 @@ await api.login();
 }
 ```
 
-### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise<Diary>
+### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;
 
 Пример:
 
@@ -190,9 +190,9 @@ await api.login();
 Поля:
 
 -   className: string (Имя класса)
--   laAssigns: Array<?> (Неизвестно)
+-   laAssigns: Array&lt;?&gt; (Неизвестно)
 -   termName: string (Описание дат, например четверть или полугодие)
--   weekDays: Array<DiaryDay> (Дни в дневнике)
+-   weekDays: Array&lt;DiaryDay&gt; (Дни в дневнике)
 -   weekStart: string (Начало дат)
 -   weekEnd: string (Конец дат)
 
@@ -203,7 +203,7 @@ await api.login();
 Поля:
 
 -   date: string (Дата в формате ISO)
--   lessons: Array<DiaryDayLesson> (Уроки в дне)
+-   lessons: Array&lt;DiaryDayLesson&gt; (Уроки в дне)
 
 ### Interface DiaryDayLesson
 
@@ -219,7 +219,7 @@ await api.login();
 -   room: number | null (Номер аудитории)
 -   startTime: string (Время старта урока)
 -   endTime: string (Время окончания урока)
--   assignments: Array<Assignment> (Занятие на уроке)
+-   assignments: Array&lt;Assignment&gt; (Занятие на уроке)
 
 ### Interface Assignment
 
@@ -257,11 +257,11 @@ await api.login();
 -   resultScore: ? | null (Неизвестно),
 -   dutyMark: boolean (Неизвестно)
 
-### getStudentId(): Promise<Number>
+### getStudentId(): Promise&lt;Number&gt;
 
 Получить ID студента, который авторизован в данный момент с помощью запроса на сервер. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
 
-### getAssignmentDetails(assignmentID: number): Promise<AssignmentDetails>
+### getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;
 
 Получить подробную информацию о задании на уроке.
 
@@ -302,16 +302,16 @@ await api.login();
 -   assignmentName: string (Тема задания на уроке)
 -   activityName: ? | null (Неизвестно)
 -   problemName: ? | null (Неизвестно)
--   subjectGroup: object<{ id: number (ID урока), name: string (Класс и название урока) }> (Урок)
--   teachers: Array<object<{ id: number (ID учителя), name: string (Имя учителя) }>> (Учителя)
+-   subjectGroup: object&lt;{ id: number (ID урока), name: string (Класс и название урока) }&gt; (Урок)
+-   teachers: Array&lt;object&lt;{ id: number (ID учителя), name: string (Имя учителя) }&gt;&gt; (Учителя)
 -   productId: ? | null (Неизвестно)
 -   isDeleted: boolean (Неизвестно)
 -   weight: number (Вес оценки: 10/20/40)
 -   date: string (Дата)
 -   description: ? | null (Неизвестно)
--   attachments: Array<?> (Неизвестно)
+-   attachments: Array&lt;?&gt; (Неизвестно)
 
-### getUserProfile(studentID?: number = this.studentID): Promise<Profile>
+### getUserProfile(studentID?: number = this.studentID): Promise&lt;Profile&gt;
 
 Получение профиля пользователя по studentID. Если оставить пустым аргумент метода, будет возвращен профиль авторизованного пользователя.
 
@@ -325,7 +325,7 @@ await api.login();
 -   studentId: number (ID студента)
 -   startDate: string (Наверное кто что то перепутал)
 -   endDate: string
--   status: object<{ id: number, name: string }> (Неизвестно)
+-   status: object&lt;{ id: number, name: string }&gt; (Неизвестно)
 -   statusStr: string (Неизвестно)
 -   number: string (Неизвестно)
 -   studentFirstName: null
@@ -366,7 +366,7 @@ await api.login();
 }
 ```
 
-### getUsersOnline(): Promise<Array<OnlineUser>>
+### getUsersOnline(): Promise&lt;Array&lt;OnlineUser&gt;&gt;
 
 Получение списка пользователей, которые сейчас онлайн в системе.
 
@@ -406,7 +406,7 @@ await api.login();
 }
 ```
 
-### getAnnouncements(take: number, fullVersion?: boolean = false): Promise<Array<Announcement>>
+### getAnnouncements(take: number, fullVersion?: boolean = false): Promise&lt;Array&lt;Announcement&gt;&gt;
 
 Получение новостей с главной страницы, переменная take указывает количество новостей, которое необходимо вернуть, а fullVersion выполняет неизвестную функцию, которая ничего в ответе от API не меняет.
 
@@ -420,10 +420,10 @@ await api.login();
 - description: string (Описание новости в HTML)
 - postDate: string (Дата публикации)
 - deleteDate: null | string (Дата удаления)
-- author: object<{ id: number, fio: string, nickName: string }> (Автор новости)
+- author: object&lt;{ id: number, fio: string, nickName: string }&gt; (Автор новости)
 - em: null (Неизвестно)
 - recipientInfo: null (Неизвестно)
-- attachments: Array<AnnouncementAttachment> (Приложенные к новости файлы)
+- attachments: Array&lt;AnnouncementAttachment&gt; (Приложенные к новости файлы)
 
 Пример:
 
@@ -482,11 +482,11 @@ await api.login();
 }
 ```
 
-### downloadAnnouncementAttachment(attachmentID: number): Promise<FetchResponse>
+### downloadAnnouncementAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;
 
 Скачать приложенный к новости файл. В ответ возвращается обычный ответ от fetch, его нужно парсить с помощью buffer, а дальше уже можно сохранить с помощью fs или blob в зависимости от того, в каком окружении вы используете библиотеку (node или браузер).
 
-### getPortfolio(userID?: number = this.studentID): Promise<Portfolio>
+### getPortfolio(userID?: number = this.studentID): Promise&lt;Portfolio&gt;
 
 Получить портфолио пользователя. Если не указан userID, то вернется портфолио текущего пользователя, а если указан, то вы получите null и ошибку библиотеки, потому что вы не администратор системы.
 
@@ -501,7 +501,7 @@ await api.login();
 Поля:
 - id: number (ID портфолио)
 - name: null (Название портфолио)
-- groups: Array<PortfolioSection> (Массив с разделами портфолио)
+- groups: Array&lt;PortfolioSection&gt; (Массив с разделами портфолио)
 
 Пример:
 ```javascript
@@ -574,7 +574,7 @@ await api.login();
 }
 ```
 
-### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise<MessagesResult>
+### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;
 
 ПОКА НЕ РАБОТАЕТ, нужно разобраться как логиниться в почту
 
@@ -601,7 +601,7 @@ await api.login();
 
 Поля:
 
--   Records: Array<Message> (Письма)
+-   Records: Array&lt;Message&gt; (Письма)
 -   TotalRecordCount: number (Общее кол-во писем у пользователя)
 -   ResultStatus: number (ID статуса результата)
 -   Result: string (Строка со статусом запроса)
