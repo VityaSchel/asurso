@@ -5,6 +5,7 @@ import Users from './UsersClass.js'
 import Messages from './MessagesClass.js'
 import Portfolio from './PortfolioClass.js'
 import Announcements from './AnnouncementsClass.js'
+import DocumentGeneration from './DocumentGenerationClass.js'
 import * as yup from 'yup'
 import nodefetch from 'node-fetch'
 import _ from 'lodash'
@@ -43,5 +44,6 @@ export default class ASURSO extends aggregation(
   Users,
   Messages,
   Portfolio,
-  Announcements
+  Announcements,
+  DocumentGeneration
 ) {}

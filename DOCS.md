@@ -29,6 +29,7 @@
     - [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promisemessagesresult)
     - [Interface MessagesResult](#interface-messagesresult)
     - [Interface Message](#interface-message)
+    - [generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;](#generatestudenttotalreportstart-date-end-date-htmlversion-boolean--false-promisefetchresponse)
 <!-- TOC-END -->
 
 ### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
@@ -577,3 +578,7 @@
   SentTo: "Щелочков Виктор"
 }
 ```
+
+### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;
+
+Сгенерировать и скачать отчет об успеваемости и посещаемости ученика (оценки в интервале между датами). По умолчанию генерируется PDF файл, но это можно изменить с помощью аргумента htmlVersion. Ответ аналогичен тому же, что и в методе downloadAnnouncementAttachment.

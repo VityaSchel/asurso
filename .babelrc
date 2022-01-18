@@ -1,4 +1,5 @@
 {
   "presets": ["minify"],
+  "plugins": ["@babel/plugin-proposal-private-methods"],
   "comments": false
 }
