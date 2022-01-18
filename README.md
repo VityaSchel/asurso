@@ -4,7 +4,7 @@
 
 С новым годом кста
 
-![image](https://user-images.githubusercontent.com/59040542/149536440-1409c8a3-3cb6-4dc4-92e3-120db4dbd4b1.png)
+![image](https://user-images.githubusercontent.com/59040542/149971284-551c7d68-7ae1-4430-831f-f352aa8b2aae.png)
 
 <!-- TOC-START -->
 ## Таблица контента
