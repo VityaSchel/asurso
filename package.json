@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -21,7 +21,9 @@
   "keywords": [
     "api",
     "wrapper",
-    "student"
+    "api-wrapper",
+    "student",
+    "reverse-engineering"
   ],
   "author": "vityaschel <hi@hloth.dev> (https://hloth.dev/)",
   "license": "MIT",
@@ -41,6 +43,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "node-fetch": "^3.1.0",
+    "node-html-parser": "^5.2.0",
     "patch-package": "^6.4.7",
     "yup": "^0.32.11"
   }

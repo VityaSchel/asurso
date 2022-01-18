@@ -2,8 +2,8 @@ import { format } from 'date-fns'
 import { dateValidator, validateSchema } from './utils.js'
 import * as yup from 'yup'
 
-export default class DiaryClass {
-  async getDiary(start, end, yearId = this.yearID, withLaAssigns = false) {
+export default class DocumentGenerationClass {
+  async generateStudentTotalReport(start, end, yearId = this.yearID, withLaAssigns = false) {
     await validateSchema([
       ['yearId', yearId, yup.number().required()],
       ['start', start, dateValidator],

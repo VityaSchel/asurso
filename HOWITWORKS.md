@@ -10,6 +10,7 @@
   - [Почта](#почта)
   - [Новости (объявления)](#новости-объявления)
   - [Портфолио](#портфолио)
+  - [Запрос генерации файлов и работа в real-time](#запрос-генерации-файлов-и-работа-в-realtime)
   - [Другие интересности](#другие-интересности)
 <!-- TOC-END -->
 
@@ -141,6 +142,134 @@
 В портфолио можно создавать свои собственные разделы и редактировать те, что добавлены по умолчанию.
 
 ![image](https://user-images.githubusercontent.com/59040542/149619710-0b1b08c6-30a9-4a29-a27e-c80a300f0c92.png)
+
+## Запрос генерации файлов и работа в real-time
+
+Как мы уже поняли, асурсо работает на asp, asp работает на c#, c# сделан microsoft, microsoft управляется биллом гейтсом, а он в свою очередь рептилоид, поэтому сделал SignalR чтобы высасывать из людей душу и жизненнные силы пока они с ним разбираются.
+
+В АСУ РСО для генерации файлов, например Отчет об успеваемости, необходимо запросить его через веб-сокет. Чтобы сократить размер пакета на 1.18 МБ (а именно столько весит официальный клиент signalr), я решил работать напрямую.
+
+1. Сделаем GET-запрос на https://asurso.ru/WebApi/signalr/negotiate c параметрами
+
+clientProtocol=1.5
+at=вашЗаголовокAt
+connectionData=[{"name":"queuehub"}]
+
+Не забудьте все это закодировать в URL percent encoding
+
+Также в куки обязятельно указываем ESRNSec токен. Заголовок at не нужен.
+
+В ответ получаем JSON от сервера SignalR следующего вида:
+
+```json
+{
+    "Url": "/WebApi/signalr",
+    "ConnectionToken": "aksjdjklaslk/knasndbhulqhfgsykgdfyky23fsd/lq3grbhasdbsjkhrhvkqlildfhsjlfdo",
+    "ConnectionId": "ajskdhjd-1i23ukv-aisyd-1289-fildshn1823",
+    "KeepAliveTimeout": 20,
+    "DisconnectTimeout": 30,
+    "ConnectionTimeout": 110,
+    "TryWebSockets": true,
+    "ProtocolVersion": "1.5",
+    "TransportConnectTimeout": 5,
+    "LongPollDelay": 0
+}
+```
+
+Url — адрес куда надо делать следующий запрос (константа)
+ConnectionId — это UUIDv4
+ConnectionToken — токен для подключения, его надо будет передать
+ProtocolVersion — версия, ее тоже надо будет передать
+
+Остальное нас не интересует
+
+2. Создаем веб-сокет GET-запросом на адрес `wss://asurso.ru/WebApi/signalr/connect` с параметрами: (URL-параметры, через &)
+
+transport=webSockets
+clientProtocol=1.5
+at=вашЗаголовокAt
+connectionToken=токенПодключения
+connectionData=[{"name":"queuehub"}]
+
+Параметр tid не обязателен.
+
+**Важно!!** обязательно в заголовке в запросе на создание веб-сокета нужно послать куки ESRNSec токен, иначе получим ответ 403 Forbidden от SignalR.
+
+Также между получением токена-подключена и созданием сокета стоит подождать около секунды.
+
+3. Подключившись к SignalR сразу получаем какие-то крипто-сообщения, их надо игнорировать. С открытым сокетом параллельно отправляем обычный GET-запрос на https://asurso.ru/WebApi/signalr/start со следующими параметрами:
+
+transport: webSockets
+clientProtocol: 1.5
+at: вашAtКлюч
+connectionToken: вашТокенПодключения
+connectionData: [{"name":"queuehub"}]
+
+Обязательно в заголовке отправляем куки ESRNSec, дожидаемся ответа и игнорируем его содержание.
+
+4. Теперь возвращаемся к веб-сокету и отправляем сообщение `{"H":"queuehub","M":"StartTask","A":[13600184],"I":0}`. 13600184 это, скорее всего, константа, привязанная к генерации Отчета об успеваемости и посещаемости ученика, потому что исходя из результатов моих экспериментов, другие числа и отсутствие параметра A возвращает ошибку `{"I":"0","E":"There was an error invoking Hub method 'queuehub.StartTask'."}`, такую же ошибку получаем если отправить сообщение до третьего шага.
+
+После успешной отправки получим ответ `{"I":"0"}` (но это не точно), потом `{"C":"s-0,...","M":[{"H":"QueueHub","M":"progress","A":[{"TaskId":13600184,"Status":"В процессе обработки"}]}]}` и наконец `{"C":"s-0,1DBE6D4","M":[{"H":"QueueHub","M":"complete","A":[{"TaskId":13600184,"Data":"..."}]}]}`. Именно Data и будет ID файла. Но не торопитесь получать его — мы еще не уточнили формат (html или pdf) и информацию о генерируемом документе.
+
+5. Делаем POST-запрос на `https://asurso.ru/webapi/reports/studenttotal/queue` и если хотим получить в итоге PDF, а не HTML (по умолчанию), то добавляем в конце параметр `?output=Pdf`.
+
+В теле передаем JSON:
+
+```json
+{
+  "selectedData": [
+    {
+      "filterId": "SID",
+      "filterValue": "592640",
+      "filterText": "Щелочков Виктор"
+    },
+    {
+      "filterId": "PCLID",
+      "filterValue": "...",
+      "filterText": "..."
+    },
+    {
+      "filterId": "period",
+      "filterValue": "2022-01-10T00:00:00.000Z - 2022-05-28T00:00:00.000Z",
+      "filterText": "10.01.2022 - 28.05.2022"
+    }
+  ],
+  "params": [
+    {
+      "name": "SCHOOLYEARID",
+      "value": "..."
+    },
+    {
+      "name": "SERVERTIMEZONE",
+      "value": 4
+    },
+    {
+      "name": "FULLSCHOOLNAME",
+      "value": "..."
+    },
+    {
+      "name": "DATEFORMAT",
+      "value": "d\u0001mm\u0001yy\u0001."
+    }
+  ]
+}
+```
+
+Не забудем также передать куки ESRNSec и заголовок at.
+
+Ответ дожидаемся и игнорируем.
+
+После этого можем получить результат привычным образом: `https://asurso.ru/webapi/files/[fileID]`
+
+6. (Необязательно) Вы можете сами отключиться от веб-сокета или завершить его с помощью сервера SignalR послав еще один POST-запрос на `https://asurso.ru/WebApi/signalr/abort` с параметрами
+
+transport: webSockets
+clientProtocol: 1.5
+at: вашAtКлюч
+connectionToken: токенПодключения
+connectionData: [{"name":"queuehub"}]
+
+Тогда веб-сокет отключится сам по себе.
 
 ## Другие интересности
 

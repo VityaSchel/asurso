@@ -6,7 +6,7 @@
 - [Документация](#документация)
     - [login(tokens?: TokensObject): Promise&lt;TokensObject&gt;](#logintokens-tokensobject-promisetokensobject)
     - [Interface TokensObject](#interface-tokensobject)
-    - [getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiaryyearid-number-start-date-end-date-withlaassigns-boolean--false-promisediary)
+    - [getDiary(start: Date, end: Date, yearID?: number = this.yearID, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiarystart-date-end-date-yearid-number--thisyearid-withlaassigns-boolean--false-promisediary)
     - [Interface Diary](#interface-diary)
     - [Interface DiaryDay](#interface-diaryday)
     - [Interface DiaryDayLesson](#interface-diarydaylesson)
@@ -53,7 +53,7 @@
 }
 ```
 
-### getDiary(yearId: number, start: Date, end: Date, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;
+### getDiary(start: Date, end: Date, yearID?: number = this.yearID, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;
 
 Пример:
 

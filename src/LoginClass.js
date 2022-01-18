@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import cookie from 'cookie'
 import md5 from 'md5'
+import { parse as htmlParser } from 'node-html-parser'
 
 export default class Login {
   async login(tokens) {
@@ -44,6 +45,7 @@ export default class Login {
       this.sessionToken = cookie.parse(loginAttempt.headers.get('set-cookie'))['ESRNSec']
     }
     this.studentID = await this.getStudentID()
+    this.yearID = await this.getYearID()
     return { atKey: this.atKey, sessionToken: this.sessionToken }
   }
 
@@ -51,5 +53,26 @@ export default class Login {
     const sessionDetails = await this.fetch('https://asurso.ru/webapi/student/diary/init')
     const studentId = sessionDetails.students[0].studentId
     return studentId
+  }
+
+  async getYearID() {
+    const htmlResponse = await this.fetch('https://asurso.ru/angular/school/main/', {
+      method: 'POST',
+      body: new URLSearchParams({ AT: this.atKey })
+    }, false)
+    const html = await htmlResponse.text()
+    const root = htmlParser(html)
+    const javascripts = root.querySelectorAll('head script[type="text/javascript"]:not([src])').map(script => script.innerHTML)
+
+    // Try to find better way to do that:
+    // 1. No API endpoint for getting yearID
+    // 2. No safe method of eval() found on internet (safe-eval compromised, babel-parser is not a solution)
+    // 3. JS-sandbox is too costly and won't work in browser
+    // Current implementation is the most secure and optimized way to get important data.
+    // Please open an issue if you found a better way to do that.
+    for (let script of javascripts){
+      const yearID = script.match(/appContext\.yearId = "(\d+)"/)?.[1]
+      if(yearID) return Number(yearID)
+    }
   }
 }

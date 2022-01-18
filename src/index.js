@@ -30,7 +30,7 @@ class BaseClass {
   async fetch(url, options = {}, autoParseJSON = true) { // private, do not place # before method name
     _.set(options, 'headers.at', this.atKey)
     const cookies = options.cookie ?? []
-    _.set(options, 'headers.Cookie', [cookie.serialize('ESRNSec', this.sessionToken), ...cookies].join('; '))
+    _.set(options, 'headers.Cookie', [cookie.serialize('ESRNSec', this.sessionToken, { encode: text => text }), ...cookies].join('; '))
     const response = await nodefetch(url, options)
     return autoParseJSON ? await response.json() : response
   }
