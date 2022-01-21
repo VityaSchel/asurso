@@ -63,7 +63,7 @@ await api.login();
 Получение файлов в дневнике|:white_check_mark:
 Получение профиля пользователей|:white_check_mark:
 Получение пользователей онлайн|:white_check_mark:
-Получение почты|:hourglass_flowing_sand:
+Получение почты|:white_check_mark:
 Отправка почты|:hourglass_flowing_sand:
 Получение новостей|:white_check_mark:
 Получение файлов из новостей|:white_check_mark:

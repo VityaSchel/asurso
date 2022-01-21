@@ -498,8 +498,6 @@
 
 ### getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;
 
-ПОКА НЕ РАБОТАЕТ, нужно разобраться как логиниться в почту
-
 Получение сообщений из почты АСУ РСО. Необходимо указать папку, стартовый индекс, размер возвращаемого массива писем и сортировку.
 
 | ID папки | Название папки |
@@ -578,6 +576,10 @@
   SentTo: "Щелочков Виктор"
 }
 ```
+
+### sendMessage(text: string, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise<boolean>
+
+Пока не реализовано, но есть инфа в HOWITWORKS.md
 
 ### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;
 

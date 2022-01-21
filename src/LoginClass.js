@@ -39,6 +39,7 @@ export default class Login {
         },
         referrer: 'https://asurso.ru/about.html',
       })
+
       const loginResult = await loginAttempt.json()
 
       this.atKey = loginResult.at
@@ -50,7 +51,13 @@ export default class Login {
   }
 
   async getStudentID() {
-    const sessionDetails = await this.fetch('https://asurso.ru/webapi/student/diary/init')
+    let sessionDetails
+    try {
+      sessionDetails = await this.fetch('https://asurso.ru/webapi/student/diary/init')
+    } catch(e) {
+      if(e.message === 'Unexpected token < in JSON at position 0') throw 'Incorrect login data or session expired'
+      else throw e
+    }
     const studentId = sessionDetails.students[0].studentId
     return studentId
   }

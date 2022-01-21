@@ -15,11 +15,14 @@ export default class MessagesClass {
       AT: this.atKey,
       nBoxID: folderID,
       jtStartIndex: startIndex,
-      jtPageSize: pageSize,
-      jtSorting: sort
-    }).toString().replaceAll(/\+/g, '%20')
+      jtPageSize: pageSize
+    }).toString() + `&jtSorting=${sort.replaceAll(/ /g, '%20')}`
 
     const messagesResult = await this.fetch(`https://asurso.ru/asp/ajax/GetMessagesAjax.asp?${query}`)
     return messagesResult
+  }
+
+  async sendMessage() {
+    v.querySelector('form > [name=AntiForgeryToken]').getAttribute('value')
   }
 }
