@@ -159,7 +159,7 @@ VER, ATO, ACC, ABC, NEEDNOTIFY необязательные
 
 LoginType, MBID, ShortAttach это константы
 
-AntiForgeryToken можно получить только GET запросом на https://asurso.ru/asp/Messages/composemessage.asp?at=[вашAtТокен] и парсингом HTML кода страницы (css-селектор: form > [name=AntiForgeryToken])
+AntiForgeryToken можно получить только GET запросом на https://asurso.ru/asp/Messages/composemessage.asp?at=[вашAtТокен] и парсингом HTML кода страницы (css-селектор: form &gt; [name=AntiForgeryToken])
 
 LTO — ID получателя
 

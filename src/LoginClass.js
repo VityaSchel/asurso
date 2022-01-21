@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import cookie from 'cookie'
 import md5 from 'md5'
-import { parse as htmlParser } from 'node-html-parser'
+import htmlParser from 'node-html-parser'
 
 export default class Login {
   async login(tokens) {
@@ -68,7 +68,7 @@ export default class Login {
       body: new URLSearchParams({ AT: this.atKey })
     }, false)
     const html = await htmlResponse.text()
-    const root = htmlParser(html)
+    const root = htmlParser.parse(html)
     const javascripts = root.querySelectorAll('head script[type="text/javascript"]:not([src])').map(script => script.innerHTML)
 
     // Try to find better way to do that:

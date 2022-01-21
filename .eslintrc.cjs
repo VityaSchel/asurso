@@ -2,10 +2,11 @@ module.exports = {
   'env': {
     'browser': true,
     'es2021': true,
-    'node': true
+    'node': true,
+    'jest/globals': true
   },
   'extends': 'eslint:recommended',
-  'parser': "@babel/eslint-parser",
+  'parser': '@babel/eslint-parser',
   'parserOptions': {
     sourceType: 'module'
   },
@@ -27,5 +28,6 @@ module.exports = {
       'never'
     ],
     'no-async-promise-executor': 'off'
-  }
+  },
+  'plugins': ['jest']
 }
