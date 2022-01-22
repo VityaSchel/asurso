@@ -1,20 +1,15 @@
 import 'dotenv/config'
 import ASURSO from '../lib/index.js'
+import testConfig from './test.config.js'
 
 const api = new ASURSO({
-  countryID: 2,
-  regionID: 1,
-  regionAreaID: -1,
-  cityID: 1,
-  schoolTypeID: 2,
-  schoolID: 257,
-  login: 'ЩелочковВ',
+  ...testConfig,
   password: process.env.PASSWORD
 })
 
 describe('вход в аккаунт', () => {
   test('создание сессии', async () => {
-    const loginResult = await api.login() //{ atKey: process.env.AT, sessionToken: process.env.SESSION_TOKEN }
+    const loginResult = await api.login()
     console.log(loginResult)
     expect(loginResult).toHaveProperty('atKey')
     expect(loginResult).toHaveProperty('sessionToken')
