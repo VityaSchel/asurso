@@ -30,7 +30,9 @@
     - [Interface MessagesResult](#interface-messagesresult)
     - [Interface Message](#interface-message)
     - [sendMessage(text: string, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;](#sendmessagetext-string-recipientid-number-copyrecipientid-number-blindcopyrecipientid-number-notifyaboutreading-boolean--false-promiseboolean)
-    - [generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;](#generatestudenttotalreportstart-date-end-date-htmlversion-boolean--false-promisefetchresponse)
+    - [generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;StudentTotalReport&gt;](#generatestudenttotalreportstart-date-end-date-htmlversion-boolean--false-promisestudenttotalreport)
+    - [Interface StudentTotalReport](#interface-studenttotalreport)
+    - [Interface StudentTotalReportMarks](#interface-studenttotalreportmarks)
     - [getThreads(page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ForumThread&gt;&gt;](#getthreadspage-number--1-pagesize-number--25-promisearrayforumthread)
     - [Interface ForumThread](#interface-forumthread)
     - [getMessagesFromThread(threadID: number, page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ThreadMessage&gt;&gt;](#getmessagesfromthreadthreadid-number-page-number--1-pagesize-number--25-promisearraythreadmessage)
@@ -586,9 +588,34 @@
 
 Пока не реализовано, но есть инфа в HOWITWORKS.md
 
-### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;
+### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;StudentTotalReport&gt;
 
-Сгенерировать и скачать отчет об успеваемости и посещаемости ученика (оценки в интервале между датами). По умолчанию генерируется PDF файл, но это можно изменить с помощью аргумента htmlVersion. Ответ аналогичен тому же, что и в методе downloadAnnouncementAttachment.
+Сгенерировать и скачать отчет об успеваемости и посещаемости ученика (оценки в интервале между датами). По умолчанию генерируется PDF файл, но это можно изменить с помощью аргумента htmlVersion.
+
+### Interface StudentTotalReport
+
+Объект со сгенерированным отчетом об успеваемости и посещаемости ученика
+
+Поля:
+- download: function()&lt;FetchResponse&gt; (Метод для скачивания файла)
+- parse: function()&lt;Promise&lt;Array&lt;StudentTotalReportMarks&gt;&gt;&gt; (Метод для парсинга таблицы из файла (только HTML))
+
+### Interface StudentTotalReportMarks
+
+Объект с результатом парсинга таблицы и оценками ученика из отчета об успеваемости и посещаемости
+
+Поля — названия предметов
+
+Значение полей — название месяца_дня и оценки, также в некоторых полях может быть ключ average со средней оценкой.
+
+Пример:
+
+```javascript
+{
+  'Информатика': { 'Январь_14': 2, average: 2 },
+  'Физическая культура': { 'Январь_12': 'Б Б', 'Январь_19': 5, average: 5 }
+}
+```
 
 ### getThreads(page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ForumThread&gt;&gt;
 

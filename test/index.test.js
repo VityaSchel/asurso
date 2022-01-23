@@ -56,3 +56,6 @@ describe('работа с дневником', () => {
 // console.log(await api.getMessages())
 
 // describe('')
+
+//console.log(await api.getThreads())
+// console.log(await api.getMessagesFromThread(147692))
