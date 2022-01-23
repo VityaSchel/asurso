@@ -12,6 +12,8 @@
   - [Портфолио](#портфолио)
   - [Запрос генерации файлов и работа в real-time](#запрос-генерации-файлов-и-работа-в-realtime)
   - [Форум](#форум)
+  - [Ответы на задания](#ответы-на-задания)
+  - [Загрузка файлов](#загрузка-файлов)
   - [Другие интересности](#другие-интересности)
 <!-- TOC-END -->
 
@@ -161,6 +163,8 @@ VER, ATO, ACC, ABC, NEEDNOTIFY необязательные
 LoginType, MBID, ShortAttach это константы
 
 AntiForgeryToken можно получить только GET запросом на https://asurso.ru/asp/Messages/composemessage.asp?at=[вашAtТокен] и парсингом HTML кода страницы (css-селектор: form &gt; [name=AntiForgeryToken])
+
+Также нужно вместе с запросом на отправку почты отправить куки с ключом AntiForgeryToken, полученное из GET-запроса на composemessage.asp
 
 LTO — ID получателя
 
@@ -330,7 +334,24 @@ connectionData: [{"name":"queuehub"}]
 
 **Время, указанное на странице тоже генерируется на сервере, поэтому часовой пояс всех дат — Европа/Самара (UTC+4:00)**
 
-Если в адресе указан параметр at, то его же в body в x-www-form-urlencoded присылать не нужно, а если не указан то присылаем через тело запроса.
+## Ответы на задания
+
+POST запрос на `https://asurso.ru/webapi/assignments/[assignmentID]/answers?studentId=[studentID]` с заголовком at и телом x-www-form-urlencoded `=text` — для текста (ключа нет), придет 204; для редактирования отправить тот же запрос; для удаления только `=`
+
+Для прикрепления файла не нужно делать доп. запросов, просто загружаем файл и в теле указываем `assignmentId` и `assignmentFileResult: true`
+
+## Загрузка файлов
+
+POST на https://asurso.ru/webapi/attachments с заголовком at, content-type: multipart/form-data (самостоятельно в заголовках не указывать, чтобы сгенерировался boundary!!!), тело:
+
+```
+file: (binary)
+data: {"name":"empty.txt","description":"-"}
+```
+
+Название может быть любым, а description может быть null. В ответ придет ID файла в plain text
+
+Для удаления сделайте запрос с методом DELETE на `https://asurso.ru/webapi/attachments/[attachmentID]` и заголовком at.
 
 ## Другие интересности
 
@@ -344,3 +365,5 @@ connectionData: [{"name":"queuehub"}]
 -   Разные ваши сессии отображаются как разные люди в списке онлайна
 
 -   Сделайте GET-запрос на https://asurso.ru/webapi/attachments/uploadLimits без заголовка at, чтобы получить лимиты на загрузку файла
+
+-   Если в адресе на любую страницу указан параметр at, то его же в теле запроса присылать не нужно, достаточно сделать GET запрос

@@ -17,7 +17,11 @@ export default class AnnouncementsClass {
     return announcements
   }
 
-  async downloadAnnouncementAttachment(attachmentID) {
+  async downloadAttachment(attachmentID) {
+    await validateSchema([
+      ['attachmentID', attachmentID, yup.number().required()]
+    ])
+
     return this.fetch(`https://asurso.ru/webapi/attachments/${attachmentID}`, {}, false)
   }
 }

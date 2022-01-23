@@ -1,8 +1,15 @@
+import { validateSchema } from './utils.js'
 import { parseDate } from './utils.js'
 import htmlParser from 'node-html-parser'
+import * as yup from 'yup'
 
 export default class MessagesClass {
   async getThreads(page = 1, pageSize = 25) {
+    await validateSchema([
+      ['page', page, yup.number()],
+      ['pageSize', pageSize, yup.number()]
+    ])
+
     const query = new URLSearchParams({
       at: this.atKey,
       PAGE: page,
@@ -31,6 +38,12 @@ export default class MessagesClass {
   }
 
   async getMessagesFromThread(threadID, page = 1, pageSize = 25) {
+    await validateSchema([
+      ['threadID', threadID, yup.number().required()],
+      ['page', page, yup.number()],
+      ['pageSize', pageSize, yup.number()]
+    ])
+
     const query = new URLSearchParams({
       at: this.atKey,
       TID: threadID,

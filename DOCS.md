@@ -12,6 +12,9 @@
     - [Interface DiaryDayLesson](#interface-diarydaylesson)
     - [Interface Assignment](#interface-assignment)
     - [Interface Mark](#interface-mark)
+    - [getAssignmentAttachments(...assignmentID: number): Promise&lt;Array&lt;AssignmentAttachment&gt;&gt;](#getassignmentattachmentsassignmentid-number-promisearrayassignmentattachment)
+    - [Interface AssignmentAttachment](#interface-assignmentattachment)
+    - [Interface AssignmentAttachmentFile](#interface-assignmentattachmentfile)
     - [getStudentId(): Promise&lt;Number&gt;](#getstudentid-promisenumber)
     - [getAssignmentDetails(assignmentID: number): Promise&lt;AssignmentDetails&gt;](#getassignmentdetailsassignmentid-number-promiseassignmentdetails)
     - [Interface AssignmentDetails](#interface-assignmentdetails)
@@ -21,15 +24,17 @@
     - [Interface OnlineUser](#interface-onlineuser)
     - [getAnnouncements(take: number, fullVersion?: boolean = false): Promise&lt;Array&lt;Announcement&gt;&gt;](#getannouncementstake-number-fullversion-boolean--false-promisearrayannouncement)
     - [Interface Announcement](#interface-announcement)
-    - [Interface AnnouncementAttachment](#interface-announcementattachment)
-    - [downloadAnnouncementAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;](#downloadannouncementattachmentattachmentid-number-promisefetchresponse)
+    - [Interface File](#interface-file)
+    - [downloadAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;](#downloadattachmentattachmentid-number-promisefetchresponse)
     - [getPortfolio(userID?: number = this.studentID): Promise&lt;Portfolio&gt;](#getportfoliouserid-number--thisstudentid-promiseportfolio)
     - [Interface Portfolio](#interface-portfolio)
     - [Interface PortfolioSection](#interface-portfoliosection)
     - [getMessages(folderID = 1, startIndex = 0, pageSize = 100, sort = 'Sent DESC'): Promise&lt;MessagesResult&gt;](#getmessagesfolderid--1-startindex--0-pagesize--100-sort--sent-desc-promisemessagesresult)
     - [Interface MessagesResult](#interface-messagesresult)
     - [Interface Message](#interface-message)
-    - [sendMessage(text: string, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;](#sendmessagetext-string-recipientid-number-copyrecipientid-number-blindcopyrecipientid-number-notifyaboutreading-boolean--false-promiseboolean)
+    - [sendMessage(subject: string, text: string, attachmentID?: number, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;](#sendmessagesubject-string-text-string-attachmentid-number-recipientid-number-copyrecipientid-number-blindcopyrecipientid-number-notifyaboutreading-boolean--false-promiseboolean)
+    - [uploadFile()](#uploadfile)
+    - [deleteFile()](#deletefile)
     - [generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;StudentTotalReport&gt;](#generatestudenttotalreportstart-date-end-date-htmlversion-boolean--false-promisestudenttotalreport)
     - [Interface StudentTotalReport](#interface-studenttotalreport)
     - [Interface StudentTotalReportMarks](#interface-studenttotalreportmarks)
@@ -206,6 +211,36 @@ await api.generateStudentTotalReport()
 -   resultScore: ? | null (Неизвестно),
 -   dutyMark: boolean (Неизвестно)
 
+### getAssignmentAttachments(...assignmentID: number): Promise&lt;Array&lt;AssignmentAttachment&gt;&gt;
+
+Получить прикрепленные к заданию в дневнике файлы или получить отправленные в АСУ РСО файлы (ответы)
+
+В аргументах метода можно указать любое кол-во ID заданий, вернется массив
+
+### Interface AssignmentAttachment
+
+Объект с данными о вложенных файлах в задании или отправленных ответах
+
+Поля:
+- answerFiles: Array&lt;AssignmentAttachmentFile&gt; (Массив ответов на задание)
+- assignmentId: number (ID задания)
+- attachments: Array&lt;File&gt; (Массив с вложенными файлами)
+
+Файлы можно скачать с помощью downloadAttachment(fileID)
+
+### Interface AssignmentAttachmentFile
+
+Поля:
+- aFile: null (Неизвестно)
+- attachmentDate: string (Дата прикрепления)
+- description: string (Описание файла)
+- fileName: string (Название файла с расширением)
+- id: number (File ID)
+- saved: number (Неизвестно, всегда 0)
+- userId: null (Неизвестно)
+
+Файл можно скачать с помощью downloadAttachment(id)
+
 ### getStudentId(): Promise&lt;Number&gt;
 
 Получить ID студента, который авторизован в данный момент с помощью запроса на сервер. Вызывается внутри login(). Если вы хотите установить studentId самостоятельно, делайте это сразу после вызова await login() через свойство экземпляра apiInstance.studentID.
@@ -372,7 +407,7 @@ await api.generateStudentTotalReport()
 - author: object&lt;{ id: number, fio: string, nickName: string }&gt; (Автор новости)
 - em: null (Неизвестно)
 - recipientInfo: null (Неизвестно)
-- attachments: Array&lt;AnnouncementAttachment&gt; (Приложенные к новости файлы)
+- attachments: Array&lt;File&gt; (Приложенные к новости файлы)
 
 Пример:
 
@@ -394,7 +429,7 @@ await api.generateStudentTotalReport()
 }
 ```
 
-### Interface AnnouncementAttachment
+### Interface File
 
 Поля:
 - id: number (ID приложенного файла)
@@ -431,15 +466,13 @@ await api.generateStudentTotalReport()
 }
 ```
 
-### downloadAnnouncementAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;
+### downloadAttachment(attachmentID: number): Promise&lt;FetchResponse&gt;
 
-Скачать приложенный к новости файл. В ответ возвращается обычный ответ от fetch, его нужно парсить с помощью buffer, а дальше уже можно сохранить с помощью fs или blob в зависимости от того, в каком окружении вы используете библиотеку (node или браузер).
+Скачать приложенный к новости/дневнику/портфолио файл. В ответ возвращается обычный ответ от fetch, его нужно парсить с помощью buffer, а дальше уже можно сохранить с помощью fs или blob в зависимости от того, в каком окружении вы используете библиотеку (node или браузер).
 
 ### getPortfolio(userID?: number = this.studentID): Promise&lt;Portfolio&gt;
 
 Получить портфолио пользователя. Если не указан userID, то вернется портфолио текущего пользователя, а если указан, то вы получите null и ошибку библиотеки, потому что вы не администратор системы.
-
-
 
 ### Interface Portfolio
 
@@ -604,9 +637,21 @@ await api.generateStudentTotalReport()
 }
 ```
 
-### sendMessage(text: string, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;
+### sendMessage(subject: string, text: string, attachmentID?: number, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;
 
-Пока не реализовано, но есть инфа в HOWITWORKS.md
+Отправить письмо по почте системы АСУ РСО.
+
+- subject — тема письма
+- text — текст письма
+- attachmentID — ID прикрепленного файла, для загрузки используйте uploadFile()
+- recipientID - ID получателя письма
+- copyRecipientID — ID получателя копии
+- blindCopyRecipientID — ID получателя скрытой копии
+- notifyAboutReading — уведомить отправителя о прочтении письма
+
+### uploadFile()
+
+### deleteFile()
 
 ### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;StudentTotalReport&gt;
 

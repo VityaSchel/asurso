@@ -35,4 +35,18 @@ export default class DiaryClass {
     const diary = await this.fetch(`https://asurso.ru/webapi/student/diary/assigns/${assignmentID}?${new URLSearchParams(query)}`)
     return diary
   }
+
+  async getAssignmentAttachments(...assignIDs) {
+    await validateSchema([
+      ['assignIDs', assignIDs, yup.array().of(yup.number()).required()]
+    ])
+
+    return await this.fetch(`https://asurso.ru/webapi/student/diary/get-attachments?studentId=${this.studentID}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        assignId: assignIDs
+      }),
+      headers: {'Content-Type': 'application/json;charset=UTF-8'}
+    })
+  }
 }
