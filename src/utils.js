@@ -1,4 +1,6 @@
 import * as yup from 'yup'
+import { parse } from 'date-fns'
+import { ru as dateFnsRuLocale } from 'date-fns/locale/index.js'
 
 export const aggregation = (baseClass, ...mixins) => {
   class base extends baseClass {
@@ -32,3 +34,7 @@ export const validateSchema = async (schema) => {
 }
 
 export const dateValidator = yup.date().test('is Date', 'StartDate is not date', d => d instanceof Date).required()
+
+export const parseDate = string => {
+  return parse(string, 'EEEEEE, d LLL y H:mm', new Date(), { locale: dateFnsRuLocale })
+}

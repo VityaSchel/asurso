@@ -9,3 +9,4 @@ const api = new ASURSO({
 
 console.log(await api.login({ atKey: process.env.AT, sessionToken: process.env.SESSION_TOKEN }))
 console.log(await api.getThreads())
+console.log(await api.getMessagesFromThread(147692))

@@ -60,7 +60,7 @@ await api.login();
 Вход в аккаунт|:white_check_mark:
 Создание сессии после входа|:white_check_mark:
 Получение дневника: дз, оценки|:white_check_mark:
-Получение файлов в дневнике|:white_check_mark:
+Получение файлов в дневнике|:hourglass_flowing_sand:
 Получение профиля пользователей|:white_check_mark:
 Получение пользователей онлайн|:white_check_mark:
 Получение почты|:white_check_mark:
@@ -68,12 +68,13 @@ await api.login();
 Получение новостей|:white_check_mark:
 Получение файлов из новостей|:white_check_mark:
 Получение портфолио (портрет, достижения, коллектор, рабочие материалы)|:white_check_mark:
-Получение файлов из портфолио|:white_check_mark:
-Получение тем на форуме|:hourglass_flowing_sand:
+Получение файлов из портфолио|:hourglass_flowing_sand:
+Получение тем на форуме|:white_check_mark:
 Создание тем на форуме|:hourglass_flowing_sand:
+Чтение сообщений в темах на форуме|:white_check_mark:
 Отправка сообщений в темы на форуме|:hourglass_flowing_sand:
 Загрузка файлов|:hourglass_flowing_sand:
-Генерация и скачивание отчетов|:white_check_mark:
+Генерация, скачивание и парсинг отчетов|:white_check_mark:
 
 ### TODO:
 

@@ -31,6 +31,10 @@
     - [Interface Message](#interface-message)
     - [sendMessage(text: string, recipientID: number, copyRecipientID?: number, blindCopyRecipientID?: number, notifyAboutReading?: boolean = false): Promise&lt;boolean&gt;](#sendmessagetext-string-recipientid-number-copyrecipientid-number-blindcopyrecipientid-number-notifyaboutreading-boolean--false-promiseboolean)
     - [generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;](#generatestudenttotalreportstart-date-end-date-htmlversion-boolean--false-promisefetchresponse)
+    - [getThreads(page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ForumThread&gt;&gt;](#getthreadspage-number--1-pagesize-number--25-promisearrayforumthread)
+    - [Interface ForumThread](#interface-forumthread)
+    - [getMessagesFromThread(threadID: number, page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ThreadMessage&gt;&gt;](#getmessagesfromthreadthreadid-number-page-number--1-pagesize-number--25-promisearraythreadmessage)
+    - [Interface ThreadMessage](#interface-threadmessage)
 <!-- TOC-END -->
 
 ### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
@@ -585,3 +589,60 @@
 ### generateStudentTotalReport(start: Date, end: Date, htmlVersion?: boolean = false): Promise&lt;FetchResponse&gt;
 
 Сгенерировать и скачать отчет об успеваемости и посещаемости ученика (оценки в интервале между датами). По умолчанию генерируется PDF файл, но это можно изменить с помощью аргумента htmlVersion. Ответ аналогичен тому же, что и в методе downloadAnnouncementAttachment.
+
+### getThreads(page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ForumThread&gt;&gt;
+
+Возвращает массив с темами с форума системы (сортировка по времени последнего ответа нисходящая)
+
+### Interface ForumThread
+
+Объект, содержащий данные о теме на форуме
+
+Поля:
+- id: number (ID темы форума)
+- name: string (Название темы)
+- author: string (Имя автора темы)
+- moderators: string (Модераторы)
+- answersCount: number (Число ответов)
+- lastMessage: Object&lt;{ date: Date (Дата, часовой пояс — Самара), author: string (Имя автора последнего ответа) }&gt; (Последний ответ)
+
+Пример:
+```javascript
+{
+  id: 147692,
+  name: 'Я сделал библиотеку для использования апи асу рсо',
+  author: 'Щелочков Виктор',
+  moderators: '&nbsp;',
+  answersCount: 2,
+  lastMessage: { date: 2022-01-22T20:28:00.000Z, author: 'Щелочков Виктор' }
+}
+```
+
+### getMessagesFromThread(threadID: number, page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ThreadMessage&gt;&gt;
+
+Возвращает сообщения из темы форума
+
+### Interface ThreadMessage
+
+Объект, содержащий данные о сообщении с форума
+
+Поля:
+- author: object (Автор сообщения)
+- author.name: string (Имя автора)
+- author.position: string (Должность автора)
+- author.avatar: string (URL аватара профиля автора)
+- message: string (HTML-код сообщения, может содержать, например, ссылку с тегом `a`)
+- date: Date (Дата публикации сообщения)
+
+Пример:
+```javascript
+{
+  author: {
+    name: 'Щелочков Виктор',
+    position: '...',
+    avatar: '/webapi/users/photo?AT=...&VER=...&userId=592640'
+  },
+  message: 'привет питонистам',
+  date: 2022-01-22T20:28:00.000Z
+}
+```
