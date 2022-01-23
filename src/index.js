@@ -11,6 +11,7 @@ import * as yup from 'yup'
 import nodefetch from 'node-fetch'
 import _ from 'lodash'
 import cookie from 'cookie'
+import * as sharedutils from './sharedutils.js'
 
 class BaseClass {
   constructor(loginDetails) {
@@ -49,3 +50,5 @@ export default class ASURSO extends aggregation(
   DocumentGeneration,
   Forum
 ) {}
+
+export const utils = sharedutils

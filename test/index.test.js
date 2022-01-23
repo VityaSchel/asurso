@@ -10,7 +10,6 @@ const api = new ASURSO({
 describe('вход в аккаунт', () => {
   test('создание сессии', async () => {
     const loginResult = await api.login()
-    console.log(loginResult)
     expect(loginResult).toHaveProperty('atKey')
     expect(loginResult).toHaveProperty('sessionToken')
   })

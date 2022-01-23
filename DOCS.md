@@ -37,7 +37,27 @@
     - [Interface ForumThread](#interface-forumthread)
     - [getMessagesFromThread(threadID: number, page?: number = 1, pageSize?: number = 25): Promise&lt;Array&lt;ThreadMessage&gt;&gt;](#getmessagesfromthreadthreadid-number-page-number--1-pagesize-number--25-promisearraythreadmessage)
     - [Interface ThreadMessage](#interface-threadmessage)
+- [Утилиты](#утилиты)
+    - [calcAverageMark(marks: Array&lt;Array&lt;mark: number, weight: number&gt;&gt;): number](#calcaveragemarkmarks-arrayarraymark-number-weight-number-number)
+    - [parseDate(date: string): Date](#parsedatedate-string-date)
 <!-- TOC-END -->
+
+Все методы ниже до заголовка [Утилиты](#утилиты) должны вызываться из экземляра класса ASURSO, вот так:
+
+```javascript
+import ASURSO from 'asurso'
+
+const api = new ASURSO({
+  // данные для входа, см. пример в README.md
+})
+
+await api.login()
+
+await api.getDiary()
+await api.getStudentId()
+await api.generateStudentTotalReport()
+// ...
+```
 
 ### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
 
@@ -673,3 +693,33 @@
   date: 2022-01-22T20:28:00.000Z
 }
 ```
+
+# Утилиты
+
+Утилиты импортируются из пакета по названию, вот так:
+
+```javascript
+import { utils } from 'asurso'
+
+utils.calcAverageMark([[2, 10], [5, 40]]) // =&gt; 4.4
+```
+
+или так:
+
+```javascript
+import ASURSO from 'asurso'
+
+ASURSO.utils.parseDate('Чт, 27 Июн. 2019 15:00') // =&gt; 2019-06-27T11:00:00.000Z
+```
+
+Они могут использоваться без авторизации и создания экземпляра класса
+
+### calcAverageMark(marks: Array&lt;Array&lt;mark: number, weight: number&gt;&gt;): number
+
+Подсчет средней оценки по методике АСУ РСО
+
+Передайте в метод аргументом массив массивов, где в каждом из массивов: первый элемент — оценка, второй — вес (10/20/40)
+
+### parseDate(date: string): Date
+
+Конвертация времени в формате АСУ РСО из строки в объект Date

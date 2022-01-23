@@ -1,6 +1,6 @@
 {
   "name": "asurso",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "description": "asurso.ru API wrapper [beta]",
   "main": "lib/index.js",
@@ -11,7 +11,7 @@
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest --config=\"./jest.config.js\"",
     "build": "babel src --out-dir lib",
     "gen-toc": "find *.md -exec node gentoc.js {} \\;",
-    "prepublishOnly": "npm run build -- --presets minify && npm run gen-toc",
+    "prepublishOnly": "npm run build -- --presets minify && npm test && npm run gen-toc",
     "postinstall": "patch-package"
   },
   "repository": {
