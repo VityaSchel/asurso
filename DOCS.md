@@ -4,6 +4,7 @@
 ## Таблица контента
 
 - [Документация](#документация)
+    - [constructor ASURSO](#constructor-asurso)
     - [login(tokens?: TokensObject): Promise&lt;TokensObject&gt;](#logintokens-tokensobject-promisetokensobject)
     - [Interface TokensObject](#interface-tokensobject)
     - [getDiary(start: Date, end: Date, yearID?: number = this.yearID, withLaAssigns?: boolean = false): Promise&lt;Diary&gt;](#getdiarystart-date-end-date-yearid-number--thisyearid-withlaassigns-boolean--false-promisediary)
@@ -63,6 +64,21 @@ await api.getStudentId()
 await api.generateStudentTotalReport()
 // ...
 ```
+
+### constructor ASURSO
+
+Конструктор класса ASURSO, экземпляр которого нужно создать перед работой с API. Все ID вы можете посмотреть в файле [LOGINIDS.md](./LOGINIDS.md)
+
+Поля:
+
+-   countryID: number (ID страны)
+-   regionID: number (ID области)
+-   regionAreaID: number (ID округа/района)
+-   cityID: number (ID города)
+-   schoolTypeID: number (ID типа школы)
+-   schoolID: number (ID школы)
+-   login: string (Логин)
+-   password: string (Пароль в чистом виде)
 
 ### login(tokens?: TokensObject): Promise&lt;TokensObject&gt;
 
