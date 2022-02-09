@@ -15,7 +15,8 @@ export default class Login {
       const nSessionID = cookie.parse(authSessionResponse.headers.get('set-cookie'))['NSSESSIONID']
       const authSessionDetails = await authSessionResponse.json()
 
-      const passwordHash = md5(authSessionDetails.salt + md5(this.loginDetails.password))
+      const password = this.loginDetails.password
+      const passwordHash = md5(authSessionDetails.salt + md5(password))
       const body = {
         LoginType: 1,
         cid: this.loginDetails.countryID,
@@ -25,7 +26,7 @@ export default class Login {
         sft: this.loginDetails.schoolTypeID,
         scid: this.loginDetails.schoolID,
         UN: this.loginDetails.login,
-        PW: passwordHash.substring(0, 9),
+        PW: passwordHash.substring(0, password.length),
         lt: authSessionDetails.lt,
         pw2: passwordHash,
         ver: authSessionDetails.ver,
